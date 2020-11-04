@@ -1,0 +1,21 @@
+version: "3"
+services:
+  wolweb:
+    container_name: wolweb
+    image: "wolweb"
+    
+    # make sure that the file exists in local directory from where you are running the compose file
+    # Or, initialize empty json file by running command "echo '{}' > devices.json"
+    volumes:
+      - ./devices.json:/wolweb/devices.json
+
+    # Have to use host mode as bridge network has issues with UDP broadcast
+    # https://github.com/docker/for-linux/issues/637
+    # ports:
+    #   - 12345:8089
+    network_mode: host
+
+    # Use environment variable below to change port or virtual directory.
+    #environment:
+      #WOLWEBPORT: "8089"
+      #WOLWEBVDIR: "/wolweb"
