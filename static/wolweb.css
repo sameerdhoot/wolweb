@@ -12,6 +12,11 @@
     margin-right: 12px !important;
 }
 
+.bs-grid-button {
+    font-size: 18px;
+    min-width: 22px;
+}
+
 .hideMe {
     display: none;
 }

@@ -21,6 +21,7 @@ type AppData struct {
 
 // AppConfig represents a configuration object to initialize this application
 type AppConfig struct {
-	Port int    `json:"port" env:"WOLWEBPORT" env-default:"8089"`
-	VDir string `json:"vdir" env:"WOLWEBVDIR" env-default:"/wolweb"`
+	Port    int    `json:"port" env:"WOLWEBPORT" env-default:"8089"`
+	VDir    string `json:"vdir" env:"WOLWEBVDIR" env-default:"/wolweb"`
+	BCastIP string `json:"bcastip" env:"WOLWEBBCASTIP" env-default:"192.168.1.255:9"`
 }

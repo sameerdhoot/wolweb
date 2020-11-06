@@ -11,9 +11,11 @@ func renderHomePage(w http.ResponseWriter, r *http.Request) {
 	pageData := struct {
 		Devices []Device
 		VDir    string
+		BCastIP string
 	}{
 		Devices: appData.Devices,
 		VDir:    appConfig.VDir,
+		BCastIP: appConfig.BCastIP,
 	}
 	tmpl, _ := template.ParseFiles("index.html")
 	tmpl.Execute(w, pageData)

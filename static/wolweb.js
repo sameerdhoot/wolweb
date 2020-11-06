@@ -42,8 +42,8 @@ function getAppData() {
 
     $.getJSON(vDir + "/data/get", function (data) {
         window.appData = data;
-        if(!appData.devices) {
-            appData.devices=[];
+        if (!appData.devices) {
+            appData.devices = [];
         }
         renderData();
     }).fail(function (data) {
@@ -74,7 +74,7 @@ function renderData() {
 
         _createEditButton: function (item) {
             var grid = this._grid;
-            return $("<i class=\"fas fa-edit grid-button text-success\" title=\"" + this.editButtonTooltip + "\">").click(function (e) {
+            return $("<button class=\"btn btn-sm btn-light m-0 p-1\" title=\"" + this.editButtonTooltip + "\">").append("<i class=\"fas fa-edit bs-grid-button text-success m-0 p-0\">").click(function (e) {
                 grid.editItem(item);
                 e.stopPropagation();
             });
@@ -82,7 +82,7 @@ function renderData() {
 
         _createDeleteButton: function (item) {
             var grid = this._grid;
-            return $("<i class=\"fas fa-trash-alt grid-button text-danger\" title=\"" + this.deleteButtonTooltip + "\">").click(function (e) {
+            return $("<button class=\"btn btn-sm btn-light m-0 ml-1 p-1\" title=\"" + this.deleteButtonTooltip + "\">").append("<i class=\"fas fa-trash-alt bs-grid-button text-danger m-0 p-0\">").click(function (e) {
                 grid.deleteItem(item);
                 e.stopPropagation();
             });
@@ -90,7 +90,7 @@ function renderData() {
 
         _createUpdateButton: function () {
             var grid = this._grid;
-            return $("<i class=\"fas fa-save grid-button text-success\" title=\"" + this.updateButtonTooltip + "\">").click(function (e) {
+            return $("<button class=\"btn btn-sm btn-light m-0 ml-1 p-1\" title=\"" + this.updateButtonTooltip + "\">").append("<i class=\"fas fa-save bs-grid-button text-success m-0 p-0\">").click(function (e) {
                 grid.updateItem();
                 e.stopPropagation();
             });
@@ -98,7 +98,7 @@ function renderData() {
 
         _createCancelEditButton: function () {
             var grid = this._grid;
-            return $("<i class=\"fas fa-window-close grid-button text-danger\" title=\"" + this.cancelEditButtonTooltip + "\">").click(function (e) {
+            return $("<button class=\"btn btn-sm btn-light m-0 ml-1 p-1\" title=\"" + this.cancelEditButtonTooltip + "\">").append("<i class=\"fas fa-window-close bs-grid-button text-danger m-0 p-0\">").click(function (e) {
                 grid.cancelEdit();
                 e.stopPropagation();
             });
@@ -113,13 +113,21 @@ function renderData() {
 
     gridFields.push({ name: "name", title: "Device", type: "text", width: 150, validate: { validator: "required", message: "Device name is a required field." } });
     gridFields.push({ name: "mac", title: "MAC Adress", type: "text", width: 150, validate: { validator: "pattern", param: /^[0-9a-f]{1,2}([\.:-])(?:[0-9a-f]{1,2}\1){4}[0-9a-f]{1,2}$/gmi, message: "MAC Address is a required field." } });
-    gridFields.push({ name: "ip", title: "Broadcast IP", type: "text", width: 150, validate: { validator: "required", message: "Broadcast IP Address is a required field." } });
+    gridFields.push({
+        name: "ip", title: "Broadcast IP", type: "text", width: 150, validate: { validator: "required", message: "Broadcast IP Address is a required field." },
+        insertTemplate: function () {
+            var $result = jsGrid.fields.text.prototype.insertTemplate.call(this); // original input
+            $result.attr("disabled", true).css("background", "lightgray").val(bCastIP);
+            return $result;
+        },
+        // editing: false
+    });
     gridFields.push({
         name: "command", type: "control", width: 125, modeSwitchButton: false,
         itemTemplate: function (value, item) {
             return $("<button>").addClass("btn btn-primary btn-sm")
                 .attr({ type: "button", title: "Send magic packet" })
-                .html("<i class=\"fas fa-power-off\"></i>WAKE-UP")
+                .html("<i class=\"fas fa-bolt\"></i>WAKE-UP")
                 .on("click", function () {
                     $.wakeUpDeviceByName(item.name)
                 });
@@ -134,7 +142,7 @@ function renderData() {
             var isInserting = grid.inserting;
             var $button = $("<button>").addClass("btn btn-info btn-sm device-insert-button")
                 .attr({ type: "button", title: "Add new Device" })
-                .html("<i class=\"fas fa-desktop\"></i>ADD")
+                .html("<i class=\"fas fa-plus\"></i>NEW")
                 .on("click", function () {
                     isInserting = !isInserting;
                     grid.option("inserting", isInserting);
