@@ -2,6 +2,7 @@ package main
 
 import (
 	"html/template"
+	"io"
 	"log"
 	"net/http"
 )
@@ -26,5 +27,12 @@ func renderHomePage(w http.ResponseWriter, r *http.Request) {
 func redirectToHomePage(w http.ResponseWriter, r *http.Request) {
 
 	http.Redirect(w, r, appConfig.VDir+"/", http.StatusFound)
+
+}
+
+func checkHealth(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Content-Type", "text/html")
+	io.WriteString(w, "alive")
 
 }

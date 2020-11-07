@@ -73,6 +73,9 @@ func setupWebServer() {
 	// Define Data get Api function
 	router.HandleFunc(appConfig.VDir+"/data/get", getData).Methods("GET")
 
+	// Define health check function
+	router.HandleFunc(appConfig.VDir+"/health", checkHealth).Methods("GET")
+
 	// Setup Webserver
 	httpListen := ":" + strconv.Itoa(appConfig.Port)
 	log.Printf("Startup Webserver on \"%s\"", httpListen)
