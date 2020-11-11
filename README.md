@@ -1,3 +1,6 @@
+[![made-with-Go](https://img.shields.io/badge/Made%20with-Go-orange)](http://golang.org) [![proc-arch](https://img.shields.io/badge/Arch-x86%20%7C%20AMD64%20%7C%20ARM5%20%7C%20ARM7-blue)](http://golang.org) [![os](https://img.shields.io/badge/OS-Linux%20%7C%20Windows%20%7C%20Darwin-yellowgreen)](http://golang.org)
+
+
 # Web interface for sending Wake-on-lan (magic packet)
 
 A GoLang based HTTP server which will send a Wake-on-lan package (magic packet) on local network. The request can be send using web interface or directly using HTTP request with mapped device name in the URL. The only computing device I have running 24x7 is handy-dandy Raspberry Pi 4 (4gb) with docker containers. All other devices like server, laptop and NAS as powered only when I need them. I needed a way to easily turn them on specifically when trying to automate things like nightly builds.
@@ -7,7 +10,7 @@ I use this application behind NGINX web proxy which is secured with HTTPS certif
 I have bookmarked direct link to device(s) on my browsers to wake them using single HTTP call for ease of access.
 
 Things I use this for:
-- to wake-up mu home laptop remotely. I use my home laptop remotely over RDP.
+- to wake-up my home laptop remotely. I use my home laptop remotely over RDP.
 - this is also helpful in building routines which will wake up my server and nightly builds and when it is all done, go back to sleep. I don't keep my home lab running 24x7 as it is a waste of energy.
 - to turn on my NAS and laptop to start the weekly backup from laptop to NAS.
 - to turn on NAS quickly when we are watching movies stored on NAS.
