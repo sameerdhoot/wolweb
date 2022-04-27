@@ -1,5 +1,5 @@
 # docker build -t wolweb .
-FROM golang:alpine AS builder
+FROM golang:1.14-alpine AS builder
 
 LABEL org.label-schema.vcs-url="https://github.com/sameerdhoot/wolweb" \
       org.label-schema.url="https://github.com/sameerdhoot/wolweb/blob/master/README.md"
