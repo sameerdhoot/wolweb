@@ -1,8 +1,9 @@
 version: "3"
 services:
   wolweb:
+    build: .
+    image: wolweb:latest
     container_name: wolweb
-    image: "wolweb"
     
     # make sure that the file exists in local directory from where you are running the compose file
     # Or, initialize empty json file by running command "echo '{}' > devices.json"

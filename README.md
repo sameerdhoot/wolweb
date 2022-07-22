@@ -89,31 +89,31 @@ You can override the default application configuration by using a config file or
 }
 
 ```
-## Using with Docker Container
+## Usage with Docker
 
-This project includes [Dockerfile (based on Alpine)](./Dockerfile) and [docker-compose.yml](./docker-compose.yml) files which you can use to build the image for your platform and run it using the docker compose file. If interested, I also have alternate [Dockerfile (based on Debian)](.Debian_Dockerfile). Both of these Dockerfile are tested to run on Raspberry Pi Docker CE. If you want to use this applicaiton as-is, you will only need to download these two docker realted files to get started. The docker file will grab the code and compile it for your platform.
-
-**Build Docker Image:**
-
-```
-docker build -t wolweb .
-```
-**Run Docker Image:**
-
-```
-docker-compose up -d
-```
-**Extract the compiled application files from image:**
-
-```
-docker cp wolweb:/wolweb - > wolweb.gz
-```
+This project includes [Dockerfile (based on Alpine)](./Dockerfile) and [docker-compose.yml](./docker-compose.yml) files which you can use to build the image for your platform and run it using the docker compose file. If interested, I also have alternate [Dockerfile (based on Debian)](.Debian_Dockerfile). Both of these Dockerfile are tested to run on Raspberry Pi Docker CE. If you want to use this application as-is, you will only need to download these two docker-related files to get started. The docker file will grab the code and compile it for your platform.
 
 > I could not get this to run using Docker's bridged network. The only way I was able to make it work was to use host network for the docker container. See this [https://github.com/docker/for-linux/issues/637](https://github.com/docker/for-linux/issues/637) for details.
 
-## Build on Windows
-I use VS Code with Go extension. To build this project on windows
+### With docker-compose
+```bash
+docker-compose up -d
 ```
+
+### Build and run manually
+```bash
+docker build -t wolweb .
+docker run --network host -it wolweb
+```
+
+### Extract the compiled application from an image
+```bash
+docker cp wolweb:/wolweb - > wolweb.gz
+```
+
+## Build on Windows
+I use VS Code with Go extension. To build this project on Windows:
+```powershell
 go build -o wolweb.exe .
 ```
 
