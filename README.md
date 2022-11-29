@@ -44,6 +44,7 @@ The application will use the following default values if they are not explicitly
 | Port | Define the port on which the webserver will listen | **8089**
 | Virtual Directory | A virtual directory to mount this application under | **/wolweb**
 | Broadcast IP and Port | This is broadcast IP address and port for the local network. *Please include the port :9* | **192.168.1.255:9**
+| Allowed Subnet | Subnet to allow request from | **0.0.0.0/0**
 
 You can override the default application configuration by using a config file or by setting environment variables. The application will first load values from config file and look for environment variables and overwrites values from the file with the values which were found in the environment.
 
@@ -53,7 +54,8 @@ You can override the default application configuration by using a config file or
 {
     "port": 8089,
     "vdir":"/wolweb",
-    "bcastip":"192.168.1.255:9"
+    "bcastip":"192.168.1.255:9",
+    "subnet":"0.0.0.0/0"
 }
 ```
 **Using Environment Variables:**
@@ -65,6 +67,7 @@ You can override the default application configuration by using a config file or
 | WOLWEBPORT | Override for default HTTP port
 | WOLWEBVDIR | Override for default virtual directory
 | WOLWEBBCASTIP | Override for broadcast IP address and port
+| WOLSUBNET | Override for client's allowed subnet 
 
 ## Devices (targets) - devices.json format
 ```json

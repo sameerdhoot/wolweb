@@ -2,10 +2,12 @@ package main
 
 import (
 	"log"
+	"net"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/gorilla/handlers"
@@ -56,6 +58,9 @@ func setupWebServer() {
 	// Init HTTP Router - mux
 	router := mux.NewRouter()
 
+	// Setup IP whitelist
+	router.Use(ipMiddleware)
+
 	// map directory to server static files
 	router.PathPrefix(appConfig.VDir + "/static/").Handler(http.StripPrefix(appConfig.VDir+"/static/", http.FileServer(http.Dir("./static"))))
 
@@ -90,4 +95,23 @@ func setupWebServer() {
 
 	log.Fatal(srv.ListenAndServe())
 
+}
+
+func ipMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		clientIP := strings.Split(r.RemoteAddr, ":")[0]
+
+		_, subnet, err := net.ParseCIDR(appConfig.AllowedSubnet)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		if !subnet.Contains(net.ParseIP(clientIP)) {
+			http.Error(w, "Forbidden", http.StatusForbidden)
+			w.WriteHeader(http.StatusForbidden)
+			return
+		}
+
+		next.ServeHTTP(w, r)
+	})
 }
