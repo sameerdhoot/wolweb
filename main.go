@@ -56,25 +56,32 @@ func setupWebServer() {
 	// Init HTTP Router - mux
 	router := mux.NewRouter()
 
+	// Define base path. Keep it empty when VDir is just "/" to avoid redirect loops
+	// Add trailing slash if basePath is not empty
+	basePath := ""
+	if appConfig.VDir != "/" {
+		basePath = appConfig.VDir
+		router.HandleFunc(basePath, redirectToHomePage).Methods("GET")
+	}
+
 	// map directory to server static files
-	router.PathPrefix(appConfig.VDir + "/static/").Handler(http.StripPrefix(appConfig.VDir+"/static/", http.FileServer(http.Dir("./static"))))
+	router.PathPrefix(basePath + "/static/").Handler(http.StripPrefix(basePath+"/static/", http.FileServer(http.Dir("./static"))))
 
 	// Define Home Route
-	router.HandleFunc(appConfig.VDir, redirectToHomePage).Methods("GET")
-	router.HandleFunc(appConfig.VDir+"/", renderHomePage).Methods("GET")
+	router.HandleFunc(basePath+"/", renderHomePage).Methods("GET")
 
 	// Define Wakeup functions with a Device Name
-	router.HandleFunc(appConfig.VDir+"/wake/{deviceName}", wakeUpWithDeviceName).Methods("GET")
-	router.HandleFunc(appConfig.VDir+"/wake/{deviceName}/", wakeUpWithDeviceName).Methods("GET")
+	router.HandleFunc(basePath+"/wake/{deviceName}", wakeUpWithDeviceName).Methods("GET")
+	router.HandleFunc(basePath+"/wake/{deviceName}/", wakeUpWithDeviceName).Methods("GET")
 
 	// Define Data save Api function
-	router.HandleFunc(appConfig.VDir+"/data/save", saveData).Methods("POST")
+	router.HandleFunc(basePath+"/data/save", saveData).Methods("POST")
 
 	// Define Data get Api function
-	router.HandleFunc(appConfig.VDir+"/data/get", getData).Methods("GET")
+	router.HandleFunc(basePath+"/data/get", getData).Methods("GET")
 
 	// Define health check function
-	router.HandleFunc(appConfig.VDir+"/health", checkHealth).Methods("GET")
+	router.HandleFunc(basePath+"/health", checkHealth).Methods("GET")
 
 	// Setup Webserver
 	httpListen := ":" + strconv.Itoa(appConfig.Port)
