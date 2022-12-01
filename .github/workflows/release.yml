@@ -1,0 +1,28 @@
+---
+name: Release
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Build and publish the container image for ${{ github.repository }}:${{ github.ref_name }}
+        uses: macbre/push-to-ghcr@v9
+        with:
+          image_name: ${{ github.repository }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          dockerfile: Dockerfile
+          image_tag:  ${{ github.ref_name }}
+      - name: Build and publish the container image for ${{ github.repository }}:latest
+        uses: macbre/push-to-ghcr@v9
+        with:
+          image_name: ${{ github.repository }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          dockerfile: Dockerfile
+          image_tag: latest
