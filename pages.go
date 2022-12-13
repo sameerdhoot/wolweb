@@ -18,6 +18,9 @@ func renderHomePage(w http.ResponseWriter, r *http.Request) {
 		VDir:    appConfig.VDir,
 		BCastIP: appConfig.BCastIP,
 	}
+	if appConfig.VDir == "/" {
+		pageData.VDir = ""
+	}
 	tmpl, _ := template.ParseFiles("index.html")
 	tmpl.Execute(w, pageData)
 	log.Println("Renedered the home page.")
