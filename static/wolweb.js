@@ -47,7 +47,7 @@ function getAppData() {
         }
         renderData();
     }).fail(function (data) {
-        alert("Error: Problem with getting approver information.");
+        alert("Error: Problem with getting data from the service.");
     });
 
 }
