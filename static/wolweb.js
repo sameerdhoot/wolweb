@@ -21,7 +21,7 @@ $(document).ready(function () {
     jQuery.wakeUpDeviceByName = function (deviceName) {
         $.ajax({
             type: "GET",
-            url: vDir + "/wake/" + deviceName,
+            url: (vDir == "/" ? "" : vDir) + "/wake/" + deviceName,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
@@ -40,14 +40,14 @@ $(document).ready(function () {
 
 function getAppData() {
 
-    $.getJSON(vDir + "/data/get", function (data) {
+    $.getJSON((vDir == "/" ? "" : vDir) + "/data/get", function (data) {
         window.appData = data;
         if (!appData.devices) {
             appData.devices = [];
         }
         renderData();
     }).fail(function (data) {
-        alert("Error: Problem with getting approver information.");
+        alert("Error: Problem with getting data from the service.");
     });
 
 }
@@ -176,7 +176,7 @@ function saveAppData() {
 
     $.ajax({
         type: "POST",
-        url: vDir + "/data/save",
+        url: (vDir == "/" ? "" : vDir) + "/data/save",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         data: JSON.stringify(appData),
