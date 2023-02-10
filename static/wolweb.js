@@ -117,7 +117,7 @@ function renderData() {
         name: "ip", title: "Broadcast IP", type: "text", width: 150, validate: { validator: "required", message: "Broadcast IP Address is a required field." },
         insertTemplate: function () {
             var $result = jsGrid.fields.text.prototype.insertTemplate.call(this); // original input
-            $result.attr("disabled", true).css("background", "lightgray").val(bCastIP);
+            // $result.attr("disabled", true).css("background", "lightgray").val(bCastIP);
             return $result;
         },
         // editing: false
