@@ -118,6 +118,7 @@ function renderData() {
         insertTemplate: function () {
             var $result = jsGrid.fields.text.prototype.insertTemplate.call(this); // original input
             // $result.attr("disabled", true).css("background", "lightgray").val(bCastIP);
+            $result.val(bCastIP);
             return $result;
         },
         // editing: false
