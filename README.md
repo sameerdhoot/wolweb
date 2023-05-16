@@ -89,6 +89,9 @@ You can override the default application configuration by using a config file or
 }
 
 ```
+
+## Requirement
+
 ## Usage with Docker
 
 This project includes [Dockerfile (based on Alpine)](./Dockerfile) and [docker-compose.yml](./docker-compose.yml) files which you can use to build the image for your platform and run it using the docker compose file. If interested, I also have alternate [Dockerfile (based on Debian)](.Debian_Dockerfile). Both of these Dockerfile are tested to run on Raspberry Pi Docker CE. If you want to use this application as-is, you will only need to download these two docker-related files to get started. The docker file will grab the code and compile it for your platform.
@@ -111,10 +114,17 @@ docker run --network host -it wolweb
 docker cp wolweb:/wolweb - > wolweb.gz
 ```
 
-## Build on Windows
-I use VS Code with Go extension. To build this project on Windows:
+## Build 
+You need Go 1.20 to build binary for any OS.
+
 ```powershell
+# Windows
 go build -o wolweb.exe .
+```
+
+```shell
+# Linux&MacOS
+go build -o wolweb .
 ```
 
 ## Build for ASUS Routers (ARM v5)
