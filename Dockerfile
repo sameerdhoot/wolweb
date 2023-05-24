@@ -28,8 +28,13 @@ COPY --from=builder /wolweb/devices.json .
 COPY --from=builder /wolweb/config.json .
 COPY --from=builder /wolweb/static ./static
 
+RUN apk add --no-cache curl
+
 ARG WOLWEBPORT=8089
+ENV WOLWEBPORT=${WOLWEBPORT}
 
 CMD ["/wolweb/wolweb"]
 
 EXPOSE ${WOLWEBPORT}
+HEALTHCHECK --interval=5s --timeout=3s \
+  CMD curl -f http://localhost:${WOLWEBPORT}/wolweb || exit 1
