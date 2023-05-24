@@ -37,4 +37,4 @@ CMD ["/wolweb/wolweb"]
 
 EXPOSE ${WOLWEBPORT}
 HEALTHCHECK --interval=5s --timeout=3s \
-  CMD curl -sf http://localhost:${WOLWEBPORT}/wolweb/health || exit 1
+  CMD curl --silent --show-error --fail http://localhost:${WOLWEBPORT}/wolweb/health || exit 1
