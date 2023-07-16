@@ -10,7 +10,7 @@ WORKDIR /wolweb
 # Install Dependecies
 RUN apk update && apk upgrade && \
     apk add --no-cache git && \
-    git clone https://github.com/ellisdickinson46/wolweb . && \
+    git clone --branch ui-2.0 https://github.com/ellisdickinson46/wolweb . && \
     go mod init wolweb && \
     go get -d github.com/gorilla/handlers && \
     go get -d github.com/gorilla/mux && \
