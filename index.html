@@ -1,75 +1,144 @@
-<html>
+<!DOCTYPE html>
+<html lang="en" style="min-width: 900px;">
 
 <head>
-  <title>Wake-on-lan Web</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
-  <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
-  <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
-  <link rel="stylesheet" href="static/wolweb.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Wake-on-LAN Service</title>
+    <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/Navbar-Right-Links-Dark-icons.css">
+    <link rel="stylesheet" href="static/css/styles.css">
+    <link rel="stylesheet" href="static/css/wolweb.css">
 </head>
 
 <body>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-12" role="main">
-        <h1 class="mb-4 mt-4"><span class="fas fa-power-off"></span> Wake-on-Lan Web Interface<small></h1>
-        <div id="snackbar" class="alert hideMe">
-          Message comes here
-        </div>
+    <nav class="navbar navbar-dark navbar-expand-md bg-dark py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-power" style="font-size: 20px;">
+                        <path d="M7.5 1v7h1V1h-1z"></path>
+                        <path
+                            d="M3 8.812a4.999 4.999 0 0 1 2.578-4.375l-.485-.874A6 6 0 1 0 11 3.616l-.501.865A5 5 0 1 1 3 8.812z">
+                        </path>
+                    </svg>
+                </span>
+                <span class="fw-bold">Wake-on-LAN Service</span></a></div>
+    </nav>
+    <div class="container">
+        <h3 style="padding-top: 20px;">Devices<button class="btn btn-primary" type="button"
+                style="margin-top: -7px;margin-left: 20px;background: var(--bs-green);border-width: 0px;"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"
+                    class="bi bi-plus-lg" style="margin-right: 4px;font-size: 16px;margin-top: -3px;">
+                    <path fill-rule="evenodd"
+                        d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z">
+                    </path>
+                </svg>NEW</button></h3>
         <div id="GridDevices"></div>
+        <!-- <div class="table-responsive">
+            <table class="table" style="table-layout: fixed;">
+                <thead>
+                    <tr style="background: #eeeef2;">
+                        <th>Device</th>
+                        <th>MAC Address</th>
+                        <th>Broadcast IP</th>
+                        <th style="width: 150px;">Action</th>
+                        <th style="width: 150px;">Modify</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>&lt;Device Name Here&gt;</td>
+                        <td>&lt;Address Here&gt;</td>
+                        <td>&lt;IP Address Here&gt;</td>
+                        <td><button class="btn btn-info" type="button"><svg xmlns="http://www.w3.org/2000/svg"
+                                    width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"
+                                    class="bi bi-lightning-fill"
+                                    style="margin-right: 4px;font-size: 16px;margin-top: -3px;">
+                                    <path
+                                        d="M5.52.359A.5.5 0 0 1 6 0h4a.5.5 0 0 1 .474.658L8.694 6H12.5a.5.5 0 0 1 .395.807l-7 9a.5.5 0 0 1-.873-.454L6.823 9.5H3.5a.5.5 0 0 1-.48-.641l2.5-8.5z">
+                                    </path>
+                                </svg>WAKE-UP</button></td>
+                        <td><button class="btn btn-primary" type="button" data-bs-toggle="w"
+                                style="margin-right: 2px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em"
+                                    height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-pencil-fill"
+                                    style="margin-top: -4px;">
+                                    <path
+                                        d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z">
+                                    </path>
+                                </svg></button><button class="btn btn-danger" type="button"
+                                style="margin-left: 2px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em"
+                                    height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-trash-fill"
+                                    style="margin-top: -4px;">
+                                    <path
+                                        d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z">
+                                    </path>
+                                </svg></button></td>
+                    </tr>
+                </tbody>
+            </table> -->
+        </div>
         <hr>
-        <p>
-        <h3>Wake-up directly using HTTP Request</h3>
-        <b>{{$.VDir}}/wake/<span class="text-info">&lt;DeviceName&gt;</span></b>
-
-        <b>Returns a JSON Object</b>
-        <p>
-        <pre>
-{
-  "success":true,
-  "message":"Sent magic packet to device Server with Mac 34:E6:D7:33:12:71 on Broadcast IP 192.168.1.255:9",
-  "error":null
-}
-        </pre>
-        </p>
-        <dl class="dl-horizontal">
-          <dt>success</dt>
-          <dd>True or False if the WakeOnLan packet was send</dd>
-          <dt>message</dt>
-          <dd>Message as string what happen</dd>
-          <dt>error</dt>
-          <dd>Encoded Jsonobject from GOLANG Error Object</dd>
-        </dl>
-        </p>
+        <h3 style="padding-top: 20px;">Wake-up directly using HTTP Requests</h3>
+        <h6 style="margin-top: -4px;">/wolweb/wake/<span class="text-secondary">&lt;Device Name&gt;</span>&nbsp;- Returns a JSON object</h6>
+        <div style="background: #eeeef1;padding: 8px;padding-left: 12px;padding-right: 12px;border-radius: 8px;overflow: scroll;margin-bottom: 12px;">
+            <code class="text-nowrap">
+                <span style="color: rgb(33, 37, 41);">{</span><br>
+                <span style="color: rgb(33, 37, 41);">&nbsp; &nbsp; "success":true,</span><br>
+                <span style="color: rgb(33, 37, 41);">&nbsp; &nbsp; "message":"Sent magic packet to device Server with Mac 34:E6:D7:33:12:71 on Broadcast IP 192.168.1.255:9",</span><br>
+                <span style="color: rgb(33, 37, 41);">&nbsp; &nbsp; "error":null</span><br><span style="color: rgb(33, 37, 41);">}</span>
+            </code>
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Method</td>
+                        <td>
+                            <div
+                                style="background: var(--bs-primary);border-radius: 80px;padding-right: 15px;padding-left: 15px;height: 28px;display: flex;align-items: center;width: 77px;justify-content: center;">
+                                <p style="color: white;margin-bottom: 0;">GET</p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Success&nbsp;&nbsp;
+                            <span style="font-style: italic;font-size: 12px;">Type: BOOLEAN</span>&nbsp;
+                        </td>
+                        <td>Returns a value based on whether magic packet was sent</td>
+                    </tr>
+                    <tr>
+                        <td>Message&nbsp;&nbsp;
+                            <span style="font-style: italic;font-size: 12px;">Type: STRING</span>
+                        </td>
+                        <td>Returns a description of the action taken</td>
+                    </tr>
+                    <tr>
+                        <td>Error&nbsp;&nbsp;
+                            <span style="font-style: italic;font-size: 12px;">Type: JSONObject</span>
+                        </td>
+                        <td>Returns a errors as a JSON converted from any raised GOLANG Error Objects</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <hr>
-        <p>
-          <i class="fab fa-github"></i> Project Page: <a
-            href="https://github.com/sameerdhoot/wolweb">https://github.com/sameerdhoot/wolweb</a>
-        </p>
-        <p class="m-0">
-          <small>Build with <span class="fa fa-heart text-danger" aria-hidden="true"></span> by Sameer Dhoot, <span
-              class="fab fa-github"></span> <a href="https://github.com/sameerdhoot">https://github.com/sameerdhoot</a></small>
-        </p>
-        <p class="m-0">
-          <small class="ml-2"><i class="fas fa-code-branch m-1"></i> from David Baumann's project <a href="https://github.com/dabondi/go-rest-wol">https://github.com/dabondi/go-rest-wol</a></small>
-        </p>
-      </div>
+        <p style="font-size: 13px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
+                viewBox="0 0 16 16" class="bi bi-github" style="margin-top: -2px;margin-right: 4px;">
+                <path
+                    d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z">
+                </path>
+            </svg>Project Page:&nbsp;<a href="#"><span
+                    style="color: rgb(0, 86, 179);">https://github.com/sameerdhoot/wolweb</span></a></p>
     </div>
-  </div>
-
-  <script>
-    window.vDir = "{{$.VDir}}"
-    window.bCastIP = "{{$.BCastIP}}"
-  </script>
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
-  <script src="static/wolweb.js"></script>
-
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
 
 </html>

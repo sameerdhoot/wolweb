@@ -1,0 +1,6 @@
+@media (min-width:0px) {
+  .container, .container-lg, .container-md, .container-sm {
+    max-width: 960px;
+  }
+}
+
