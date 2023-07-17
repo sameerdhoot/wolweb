@@ -5,19 +5,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Wake-on-LAN Service</title>
-    <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="static/css/Navbar-Right-Links-Dark-icons.css">
-    <link rel="stylesheet" href="static/css/styles.css">
-    <link rel="stylesheet" href="static/css/wolweb.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
-  <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
-  <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+    <link type="text/css" rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="static/css/Navbar-Right-Links-Dark-icons.css">
+    <link type="text/css" rel="stylesheet" href="static/css/styles.css">
+    <link type="text/css" rel="stylesheet" href="static/css/wolweb.css">
+    <link type="text/css" rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+    <link type="text/css" rel="stylesheet" href="static/css/jsgrid-1.5.3.min.css" />
+    <link type="text/css" rel="stylesheet" href="static/css/jsgrid-theme-custom.css" />
 </head>
 
 <body>
     <nav class="navbar navbar-dark navbar-expand-md bg-dark py-3">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="#">
+            <a class="navbar-brand d-flex align-items-center">
                 <span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-power" style="font-size: 20px;">
                         <path d="M7.5 1v7h1V1h-1z"></path>
@@ -26,17 +26,12 @@
                         </path>
                     </svg>
                 </span>
-                <span class="fw-bold">Wake-on-LAN Service</span></a></div>
+                <span class="fw-bold">Wake-on-LAN Service</span>
+            </a>
+        </div>
     </nav>
     <div class="container">
-        <h3 style="padding-top: 20px;">Devices<button class="btn btn-primary" type="button"
-                style="margin-top: -7px;margin-left: 20px;background: var(--bs-green);border-width: 0px;"><svg
-                    xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"
-                    class="bi bi-plus-lg" style="margin-right: 4px;font-size: 16px;margin-top: -3px;">
-                    <path fill-rule="evenodd"
-                        d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z">
-                    </path>
-                </svg>NEW</button></h3>
+        <h3 style="padding-top: 20px;">Devices</h3>
         <div id="snackbar" class="alert hideMe">
             Message comes here
         </div>
@@ -108,8 +103,8 @@
                         <td>Method</td>
                         <td>
                             <div
-                                style="background: var(--bs-primary);border-radius: 80px;padding-right: 15px;padding-left: 15px;height: 28px;display: flex;align-items: center;width: 77px;justify-content: center;">
-                                <p style="color: white;margin-bottom: 0;">GET</p>
+                                style="background: var(--bs-primary);border-radius: 80px;padding-right: 15px;padding-left: 15px;height: 24px;display: flex;align-items: center;width: 60px;justify-content: center;">
+                                <p style="color: white;margin-bottom: 0;font-size:smaller;">GET</p>
                             </div>
                         </td>
                     </tr>
@@ -148,11 +143,10 @@
         window.vDir = "{{$.VDir}}"
         window.bCastIP = "{{$.BCastIP}}"
     </script>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
-    <script src="static/js/wolweb.js"></script>
-    <script src="static/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="static/js/wolweb.js"></script>
+    <script type="text/javascript" src="static/bootstrap/js/bootstrap.min.js"></script>
 </body>
-
 </html>
