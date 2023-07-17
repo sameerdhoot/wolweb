@@ -111,10 +111,10 @@ function renderData() {
     var gridFields = [];
     var gridWidth = "100%";
 
-    gridFields.push({ name: "name", title: "Device", type: "text", validate: { validator: "required", message: "Device name is a required field." } });
-    gridFields.push({ name: "mac", title: "MAC Adress", type: "text", validate: { validator: "pattern", param: /^[0-9a-f]{1,2}([\.:-])(?:[0-9a-f]{1,2}\1){4}[0-9a-f]{1,2}$/gmi, message: "MAC Address is a required field." } });
+    gridFields.push({ name: "name", title: "Device", type: "text", width: "calc((100% - 300px)*0.33)", validate: { validator: "required", message: "Device name is a required field." } });
+    gridFields.push({ name: "mac", title: "MAC Adress", type: "text", width: "calc((100% - 300px)*0.33)", validate: { validator: "pattern", param: /^[0-9a-f]{1,2}([\.:-])(?:[0-9a-f]{1,2}\1){4}[0-9a-f]{1,2}$/gmi, message: "MAC Address is a required field." } });
     gridFields.push({
-        name: "ip", title: "Broadcast IP", type: "text", validate: { validator: "required", message: "Broadcast IP Address is a required field." },
+        name: "ip", title: "Broadcast IP", type: "text", width: "calc((100% - 300px)*0.33)", validate: { validator: "required", message: "Broadcast IP Address is a required field." },
         insertTemplate: function () {
             var $result = jsGrid.fields.text.prototype.insertTemplate.call(this); // original input
             // $result.attr("disabled", true).css("background", "lightgray").val(bCastIP);
