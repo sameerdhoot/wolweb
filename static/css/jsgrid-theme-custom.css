@@ -1,8 +1,8 @@
 /*
- * jsGrid v1.5.3 (http://js-grid.com)
- * (c) 2016 Artem Tabalin
- * Licensed under MIT (https://github.com/tabalinas/jsgrid/blob/master/LICENSE)
- */
+* jsGrid v1.5.3 (http://js-grid.com)
+* (c) 2016 Artem Tabalin
+* Licensed under MIT (https://github.com/tabalinas/jsgrid/blob/master/LICENSE)
+*/
 
 .jsgrid-edit-row>.jsgrid-cell,
 .jsgrid-filter-row>.jsgrid-cell,
@@ -10,18 +10,12 @@
 .jsgrid-grid-header,
 .jsgrid-header-row>.jsgrid-header-cell,
 .jsgrid-insert-row>.jsgrid-cell {
-    border: none;
-    box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg)
+    border-color: var(--bs-border-color);
 }
 
 .jsgrid-header-row>.jsgrid-header-cell {
-    border-top: 0
-}
-
-.jsgrid-filter-row>.jsgrid-cell,
-.jsgrid-header-row>.jsgrid-header-cell,
-.jsgrid-insert-row>.jsgrid-cell {
-    border-bottom: 0
+    border-top: 0;
+    background-color: #eeeef2 !important;
 }
 
 .jsgrid-filter-row>.jsgrid-cell:first-child,
@@ -96,12 +90,13 @@
 }
 
 .jsgrid-cell {
-    border: 1px solid #f3f3f3
+    border-color: var(--bs-border-color) !important;
+    border-bottom: 1px solid;
 }
 
 .jsgrid-grid-body .jsgrid-alt-row:first-child .jsgrid-cell,
 .jsgrid-grid-body .jsgrid-row:first-child .jsgrid-cell {
-    border-top: none
+    border-top: none;
 }
 
 .jsgrid-grid-body .jsgrid-cell:first-child {
@@ -121,7 +116,10 @@
 }
 
 .jsgrid-header-row>.jsgrid-header-cell {
-    background: #f9f9f9
+    background: #f9f9f9;
+    border-bottom: 1px solid;
+    border-color: var(--bs-border-color);
+
 }
 
 .jsgrid-filter-row>.jsgrid-cell {
@@ -144,8 +142,7 @@
 }
 
 .jsgrid-selected-row>.jsgrid-cell {
-    background: #c4e2ff;
-    border-color: #c4e2ff
+    background: #deefff;
 }
 
 .jsgrid-nodata-row>.jsgrid-cell {
