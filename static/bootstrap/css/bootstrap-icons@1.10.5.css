@@ -7,8 +7,8 @@
 @font-face {
   font-display: block;
   font-family: "bootstrap-icons";
-  src: url("/static/bootstrap/fonts/bootstrap-icons@1.10.5.woff2") format("woff2"),
-  url("/static/bootstrap/fonts/bootstrap-icons@1.10.5.woff") format("woff");
+  src: url("../fonts/bootstrap-icons@1.10.5.woff2") format("woff2"),
+  url("../fonts/bootstrap-icons@1.10.5.woff") format("woff");
 }
 
 .bi::before,
