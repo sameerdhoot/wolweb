@@ -62,48 +62,25 @@ function renderData() {
 
         _createInsertButton: function () {
             var grid = this._grid;
-            return $("<button>").addClass("btn btn-dark btn-sm")
-                .attr({ type: "button", title: "Add this device to the list." })
-                .html("<i class=\"fas fa-save\"></i>SAVE")
+            var $insertIcon = $("<i>").attr({
+                class: "bi bi-save",
+                style: "margin-right: 6px;"
+            });
+            return $("<button>")
+                .attr({
+                    class: "btn btn-dark btn-sm",
+                    type: "button",
+                    title: "Add this device to the list."
+                })
+                .append($insertIcon)
+                .append("SAVE")
+                // .html("<i class=\"fas fa-save\"></i>SAVE")
                 .on("click", function () {
                     grid.insertItem().done(function () {
                         grid.clearInsert();
                     });
                 });
-        },
-
-        _createEditButton: function (item) {
-            var grid = this._grid;
-            return $("<button class=\"btn btn-sm btn-light m-0 p-1\" title=\"" + this.editButtonTooltip + "\">").append("<i class=\"fas fa-edit bs-grid-button text-success m-0 p-0\">").click(function (e) {
-                grid.editItem(item);
-                e.stopPropagation();
-            });
-        },
-
-        _createDeleteButton: function (item) {
-            var grid = this._grid;
-            return $("<button style=\"max-height: 31px;min-width: 31px;\" class=\"btn btn-sm btn-light m-0 ml-1 p-1\" title=\"" + this.deleteButtonTooltip + "\">").append("<i class=\"bi bi-trash-fill bs-grid-button text-danger m-0 p-0\">").click(function (e) {
-                grid.deleteItem(item);
-                e.stopPropagation();
-            });
-        },
-
-        _createUpdateButton: function () {
-            var grid = this._grid;
-            return $("<button style=\"max-height: 31px;min-width: 31px;\" class=\"btn btn-sm btn-light m-0 ml-1 p-1\" title=\"" + this.updateButtonTooltip + "\">").append("<i style=\"position: relative;top: -3px;-webkit-text-stroke: 1px;\" class=\"bi bi-save bs-grid-button text-success m-0 p-0\">").click(function (e) {
-                grid.updateItem();
-                e.stopPropagation();
-            });
-        },
-
-        _createCancelEditButton: function () {
-            var grid = this._grid;
-            return $("<button class=\"btn btn-sm btn-light m-0 ml-1 p-1\" title=\"" + this.cancelEditButtonTooltip + "\">").append("<i class=\"fas fa-window-close bs-grid-button text-danger m-0 p-0\">").click(function (e) {
-                grid.cancelEdit();
-                e.stopPropagation();
-            });
-        },
-
+        }
     });
 
     jsGrid.fields.bscontrol = BSControl;
@@ -111,10 +88,33 @@ function renderData() {
     var gridFields = [];
     var gridWidth = "100%";
 
-    gridFields.push({ name: "name", title: "Device", type: "text", width: "calc((100% - 300px)*0.33)", validate: { validator: "required", message: "Device name is a required field." } });
-    gridFields.push({ name: "mac", title: "MAC Adress", type: "text", width: "calc((100% - 300px)*0.33)", validate: { validator: "pattern", param: /^[0-9a-f]{1,2}([\.:-])(?:[0-9a-f]{1,2}\1){4}[0-9a-f]{1,2}$/gmi, message: "MAC Address is a required field." } });
     gridFields.push({
-        name: "ip", title: "Broadcast IP", type: "text", width: "calc((100% - 300px)*0.33)", validate: { validator: "required", message: "Broadcast IP Address is a required field." },
+        name: "name", title: "Device",
+        type: "text",
+        width: "calc((100% - 300px)*0.33)", 
+        validate: {
+            validator: "required",
+            message: "Device name is a required field."
+        }
+    });
+    gridFields.push({
+        name: "mac", title: "MAC Address",
+        type: "text",
+        width: "calc((100% - 300px)*0.33)",
+        validate: {
+            validator: "pattern",
+            param: /^[0-9a-f]{1,2}([\.:-])(?:[0-9a-f]{1,2}\1){4}[0-9a-f]{1,2}$/gmi,
+            message: "MAC Address is a required field."
+        }
+    });
+    gridFields.push({
+        name: "ip", title: "Broadcast IP",
+        type: "text",
+        width: "calc((100% - 300px)*0.33)",
+        validate: {
+            validator: "required",
+            message: "Broadcast IP Address is a required field."
+        },
         insertTemplate: function () {
             var $result = jsGrid.fields.text.prototype.insertTemplate.call(this); // original input
             // $result.attr("disabled", true).css("background", "lightgray").val(bCastIP);
@@ -127,7 +127,10 @@ function renderData() {
         name: "command", type: "control", width: 125, modeSwitchButton: false,
         itemTemplate: function (value, item) {
             return $("<button>").addClass("btn btn-primary btn-sm")
-                .attr({ type: "button", title: "Send magic packet" })
+                .attr({
+                    type: "button",
+                    title: "Send magic packet" 
+                })
                 .html("<i class=\"bi bi-lightning-fill\" style=\"margin-right: 6px;\"></i>WAKE-UP")
                 .on("click", function () {
                     $.wakeUpDeviceByName(item.name)
@@ -137,10 +140,15 @@ function renderData() {
         insertTemplate: function () { return "" }
     });
     gridFields.push({
-        name: "control", type: "bscontrol", width: 100, editButton: true, deleteButton: true, modeSwitchButton: true,
+        name: "control", type: "bscontrol", width: 100, editButton: false, deleteButton: false, modeSwitchButton: true,
         headerTemplate: function () {
             var grid = this._grid;
             var isInserting = grid.inserting;
+            var $insertIcon = $("<i>").attr({
+                class: "bi bi-plus-lg",
+                style: "margin-right: 6px; -webkit-text-stroke: 1px"
+            });
+
             var $button = $("<button>").addClass("btn btn-info btn-sm device-insert-button")
                 .attr({ type: "button", title: "Add new Device" })
                 .html("<i class=\"bi bi-plus-lg\" style=\"margin-right: 6px; -webkit-text-stroke: 1px black;\"></i>NEW")
@@ -148,7 +156,84 @@ function renderData() {
                     isInserting = !isInserting;
                     grid.option("inserting", isInserting);
                 });
+
             return $button;
+        },
+        itemTemplate: function(value, item) {
+            var grid = this._grid;
+            var $editIcon = $("<i>").attr({
+                class: "bi bi-pencil-square",
+                style: "position: relative; top: -3px; left: -6px;"
+            });
+            var $deleteIcon = $("<i>").attr({
+                class: "bi bi-trash-fill",
+                style: "position: relative; top: -3px; left: -6px;"
+            });
+
+            var $customEditButton = $("<button>")
+                .attr({
+                    class: "btn btn-outline-warning btn-xs",
+                    role: "button",
+                    title: jsGrid.fields.control.prototype.editButtonTooltip
+                })
+                .click(function(e) {
+                    grid.editItem(item);
+                    e.stopPropagation();
+                })
+                .append($editIcon);
+            var $customDeleteButton = $("<button>")
+                .attr({
+                    class: "btn btn-outline-danger btn-xs",
+                    role: "button",
+                    title: jsGrid.fields.control.prototype.deleteButtonTooltip
+                })
+                .click(function(e) {
+                    grid.deleteItem(item);
+                    e.stopPropagation();
+                })
+                .append($deleteIcon);
+    
+            return $("<div>").attr({class: "btn-group"})
+                .append($customEditButton)
+                .append($customDeleteButton);
+        },
+        editTemplate: function () {
+            var grid = this._grid;
+            var $updateIcon = $("<i>").attr({
+                class: "bi bi-check-lg",
+                style: "position: relative; top: -3px; left: -6px;"
+            });
+            var $cancelEditIcon = $("<i>").attr({
+                class: "bi bi-x-lg",
+                style: "position: relative; top: -3px; left: -6px;"
+            });
+
+            var $customUpdateButton = $("<button>")
+                .attr({
+                    class: "btn btn-outline-success btn-xs",
+                    role: "button",
+                    title: jsGrid.fields.control.prototype.updateButtonTooltip
+                })
+                .click(function(e) {
+                    grid.updateItem();
+                    e.stopPropagation();
+                })
+                .append($updateIcon);
+            var $customCancelEditButton = $("<button>")
+                .attr({
+                    class: "btn btn-outline-secondary btn-xs",
+                    role: "button",
+                    title: jsGrid.fields.control.prototype.cancelEditButtonTooltip
+                })
+                .click(function(e) {
+                    grid.cancelEdit();
+                    e.stopPropagation();
+                })
+                .append($cancelEditIcon);
+    
+            return $("<div>").attr({class: "btn-group"})
+                .append($customUpdateButton)
+                .append($customCancelEditButton);
         }
     });
 
@@ -160,7 +245,7 @@ function renderData() {
         inserting: false,
         sorting: false,
         confirmDeleting: true,
-        deleteConfirm: "Are you sure you want to delete this Device?",
+        deleteConfirm: "Are you sure you want to delete this device?",
         data: appData.devices,
         fields: gridFields,
         rowClick: function (args) {

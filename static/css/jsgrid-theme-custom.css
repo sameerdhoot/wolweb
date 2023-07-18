@@ -134,12 +134,21 @@
     background: #fdffe3
 }
 
-.jsgrid-edit-row input {
+.jsgrid-edit-row input,
+.jsgrid-insert-row input {
     border-radius: 8px;
     border-style: solid;
     border-color: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity))!important;
     border-width: 1px;
     height: 31px;
+}
+
+.jsgrid-control-field button {
+    max-height: 31px;
+}
+
+.jsgrid-control-field .btn-group button {
+    width: 31px;
 }
 
 .jsgrid-selected-row>.jsgrid-cell {
