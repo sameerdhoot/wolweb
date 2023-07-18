@@ -139,6 +139,7 @@
     border-style: solid;
     border-color: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity))!important;
     border-width: 1px;
+    height: 31px;
 }
 
 .jsgrid-selected-row>.jsgrid-cell {

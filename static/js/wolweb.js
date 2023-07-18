@@ -82,7 +82,7 @@ function renderData() {
 
         _createDeleteButton: function (item) {
             var grid = this._grid;
-            return $("<button class=\"btn btn-sm btn-light m-0 ml-1 p-1\" title=\"" + this.deleteButtonTooltip + "\">").append("<i class=\"fas fa-trash-alt bs-grid-button text-danger m-0 p-0\">").click(function (e) {
+            return $("<button style=\"max-height: 31px;min-width: 31px;\" class=\"btn btn-sm btn-light m-0 ml-1 p-1\" title=\"" + this.deleteButtonTooltip + "\">").append("<i class=\"bi bi-trash-fill bs-grid-button text-danger m-0 p-0\">").click(function (e) {
                 grid.deleteItem(item);
                 e.stopPropagation();
             });
@@ -90,7 +90,7 @@ function renderData() {
 
         _createUpdateButton: function () {
             var grid = this._grid;
-            return $("<button class=\"btn btn-sm btn-light m-0 ml-1 p-1\" title=\"" + this.updateButtonTooltip + "\">").append("<i class=\"fas fa-save bs-grid-button text-success m-0 p-0\">").click(function (e) {
+            return $("<button style=\"max-height: 31px;min-width: 31px;\" class=\"btn btn-sm btn-light m-0 ml-1 p-1\" title=\"" + this.updateButtonTooltip + "\">").append("<i style=\"position: relative;top: -3px;-webkit-text-stroke: 1px;\" class=\"bi bi-save bs-grid-button text-success m-0 p-0\">").click(function (e) {
                 grid.updateItem();
                 e.stopPropagation();
             });
@@ -128,7 +128,7 @@ function renderData() {
         itemTemplate: function (value, item) {
             return $("<button>").addClass("btn btn-primary btn-sm")
                 .attr({ type: "button", title: "Send magic packet" })
-                .html("<i class=\"fas fa-bolt\"></i>WAKE-UP")
+                .html("<i class=\"bi bi-lightning-fill\" style=\"margin-right: 6px;\"></i>WAKE-UP")
                 .on("click", function () {
                     $.wakeUpDeviceByName(item.name)
                 });
@@ -143,7 +143,7 @@ function renderData() {
             var isInserting = grid.inserting;
             var $button = $("<button>").addClass("btn btn-info btn-sm device-insert-button")
                 .attr({ type: "button", title: "Add new Device" })
-                .html("<i class=\"fas fa-plus\"></i>NEW")
+                .html("<i class=\"bi bi-plus-lg\" style=\"margin-right: 6px; -webkit-text-stroke: 1px black;\"></i>NEW")
                 .on("click", function () {
                     isInserting = !isInserting;
                     grid.option("inserting", isInserting);
