@@ -1,6 +1,176 @@
+/* Modify container width for better scaling */
 @media (min-width:0px) {
   .container, .container-lg, .container-md, .container-sm {
     max-width: 960px;
   }
 }
 
+
+
+
+
+/* --------- Variables --------- */
+:root {
+  --alert-help: #ffab00;
+  --alert-help-border: #ffab00;
+  --alert-warning: #ff5400;
+  --alert-warning-border: #ff5400;
+  --alert-info: #3592ff;
+  --alert-info-border: #3592ff;
+  --alert-error: #d33534;
+  --alert-error-border: #d33534;
+  --alert-success: #42ae42;
+  --alert-success-border: #81cf81;
+  --alert-success-bg: #e1ede1;
+}
+
+/* --------- Alert Adjustments --------- */
+.alert {
+  position: relative;
+  padding: 0;
+  min-width: 250px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.alert button.close {
+  margin: 0.45rem 1rem;
+  opacity: 0.75;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.alert-icon,
+.alert-text {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.alert-icon {
+  min-width: 40px;
+  text-align: center;
+  font-size: 1.5rem;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.25);
+  padding: 1rem;
+}
+
+.alert-text {
+  color: #2d3a51; /* This should be whatever the defualt body copy color is for FIRECARES */
+  padding: 0.75rem;
+  width: 100%;
+}
+
+.alert-text > h5 {
+  margin-top: 0;
+  font-weight: 600;
+}
+
+.alert .alert-link {
+  font-weight: normal;
+  color: #4790e6;
+}
+
+.alert ul {
+  margin: 0;
+  li {
+    margin-bottom: 0.2rem;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+
+/* --------- Alert Types --------- */
+/* Warning */
+/* .alert-warning {
+  background-color: lighten(var(--alert-warning), 48%);
+  border-color: lighten(var(--alert-warning), 35%);
+
+  .alert-text h5 {
+    color: var(--alert-warning);
+  }
+
+  button.close {
+    color: var(--alert-warning);
+  }
+
+  .alert-icon {
+    background-color: var(--alert-warning);
+  }
+} */
+
+/* Help */
+/* .alert-help {
+  background-color: lighten(var(--alert-hel), 48%);
+  border-color: lighten(var(--alert-help), 34%);
+
+  .alert-text h4 {
+    color: var(--alert-help);
+  }
+
+  button.close {
+    color: var(--alert-help);
+  }
+
+  .alert-icon {
+    background-color: var(--alert-help);
+  }
+} */
+
+/* Info */
+/* .alert-info {
+  background-color: lighten(var(--alert-info), 38%);
+  border-color: lighten(var(--alert-info), 30%);
+
+  .alert-text h5 {
+    color: var(--alert-info);
+  }
+
+  button.close {
+    color: var(--alert-info);
+  }
+
+  .alert-icon {
+    background-color: var(--alert-info);
+  }
+} */
+
+/* Error */
+/* .alert-danger {
+  background-color: lighten(var(--alert-error), 46%);
+  border-color: lighten(var(--alert-error), 38%);
+
+  .alert-text h5 {
+    color: var(--alert-error);
+  }
+
+  button.close {
+    color: var(--alert-error);
+  }
+
+  .alert-icon {
+    background-color: var(--alert-error);
+  }
+} */
+
+/* Success */
+.alert-success {
+  background-color: var(--alert-success-bg);
+  border-color: var(--alert-success-border);
+
+  & .alert-text h5 {
+    color: var(--alert-success);
+  }
+
+  & button.close {
+    color: var(--alert-success);
+  }
+
+  & .alert-icon {
+    background-color: var(--alert-success);
+  }
+}

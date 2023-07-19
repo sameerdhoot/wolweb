@@ -2,13 +2,21 @@ $(document).ready(function () {
 
     jQuery.showSnackBar = function (data) {
 
-        $('#snackbar').text(data.message);
+        $('#snackbar > .alert-text > p').text(data.message);
         if (data.error != null) {
             $('#snackbar').addClass('alert-danger');
-            $('#snackbar').removeClass('alert-success')
+            $('#snackbar > .alert-icon > i').addClass('bi-exclamation-triangle-fill');
+            $('#snackbar').removeClass('alert-success');
+            $('#snackbar > .alert-icon > i').removeClass('bi-check-circle-fill');
+            
+            $('#snackbar > .alert-text > h5').text("Error");
         } else {
-            $('#snackbar').removeClass('alert-danger')
-            $('#snackbar').addClass('alert-success')
+            $('#snackbar').addClass('alert-success');
+            $('#snackbar > .alert-icon > i').addClass('bi-check-circle-fill')
+            $('#snackbar').removeClass('alert-danger');
+            $('#snackbar > .alert-icon > i').removeClass('bi-exclamation-triangle-fill');
+
+            $('#snackbar > .alert-text > h5').text('Success');
         }
         $('#snackbar').show();
 
@@ -58,30 +66,7 @@ function renderData() {
         jsGrid.ControlField.call(this, config);
     };
 
-    BSControl.prototype = new jsGrid.ControlField({
-
-        _createInsertButton: function () {
-            var grid = this._grid;
-            var $insertIcon = $("<i>").attr({
-                class: "bi bi-save",
-                style: "margin-right: 6px;"
-            });
-            return $("<button>")
-                .attr({
-                    class: "btn btn-dark btn-sm",
-                    type: "button",
-                    title: "Add this device to the list."
-                })
-                .append($insertIcon)
-                .append("SAVE")
-                .on("click", function () {
-                    grid.insertItem().done(function () {
-                        grid.clearInsert();
-                    });
-                });
-        }
-    });
-
+    BSControl.prototype = new jsGrid.ControlField({});
     jsGrid.fields.bscontrol = BSControl;
 
     var gridFields = [];
@@ -175,7 +160,9 @@ function renderData() {
                 .append($insertIcon)
                 .append("NEW")
                 .on("click", function () {
-                    isInserting = !isInserting;
+                    grid.clearInsert();
+
+                    isInserting = true;
                     grid.option("inserting", isInserting);
                 });
 
@@ -259,6 +246,52 @@ function renderData() {
     
             return $("<div>").attr({class: "btn-group"})
                 .append($customUpdateButton)
+                .append($customCancelEditButton);
+        },
+
+        // Button controls for inserting new items
+        insertTemplate: function () {
+            var grid = this._grid;
+            var isInserting = grid.inserting;
+            var $saveIcon = $("<i>").attr({
+                class: "bi bi-save",
+                style: "position: relative; top: -3px; left: -6px;"
+            });
+            var $clearInsertIcon = $("<i>").attr({
+                class: "bi bi-x-lg",
+                style: "position: relative; top: -3px; left: -6px;"
+            });
+
+            var $customInsertButton = $("<button>")
+                .attr({
+                    class: "btn btn-outline-dark btn-xs",
+                    role: "button",
+                    title: "Save device to list"
+                })
+                .click(function(e) {
+                    grid.insertItem().done(function () {
+                        grid.clearInsert();
+                    });
+                    e.stopPropagation();
+                })
+                .append($saveIcon);
+            var $customCancelEditButton = $("<button>")
+                .attr({
+                    class: "btn btn-outline-secondary btn-xs",
+                    role: "button",
+                    title: jsGrid.fields.control.prototype.cancelInsertButtonTooltip
+                })
+                .click(function(e) {
+                    grid.clearInsert();
+                    
+                    isInserting = false;
+                    grid.option("inserting", isInserting);
+                    e.stopPropagation();
+                })
+                .append($clearInsertIcon);
+    
+            return $("<div>").attr({class: "btn-group"})
+                .append($customInsertButton)
                 .append($customCancelEditButton);
         }
     });
