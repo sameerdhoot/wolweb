@@ -33,6 +33,11 @@ html[data-bs-theme="dark"] {
   width: fit-content;
   justify-content: center;
   color: white;
+
+  & p {
+    margin-bottom: 0;
+    font-size: smaller;
+  }
 }
 
 
