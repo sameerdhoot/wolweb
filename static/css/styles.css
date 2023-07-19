@@ -15,7 +15,7 @@ html[data-bs-theme="light"] {
   }
 }
 html[data-bs-theme="dark"] {
-  --alert-error-bg: #f3cdcd;
+  --alert-error-bg: #532c2c;
   --alert-success-bg: #3e503e;
 
   & nav.navbar {
