@@ -13,12 +13,17 @@
 :root {
   --alert-help: #ffab00;
   --alert-help-border: #ffab00;
+  
   --alert-warning: #ff5400;
   --alert-warning-border: #ff5400;
+  
   --alert-info: #3592ff;
   --alert-info-border: #3592ff;
+  
   --alert-error: #d33534;
-  --alert-error-border: #d33534;
+  --alert-error-border: #e89292;
+  --alert-error-bg: #f3cdcd;
+  
   --alert-success: #42ae42;
   --alert-success-border: #81cf81;
   --alert-success-bg: #e1ede1;
@@ -140,22 +145,22 @@
 } */
 
 /* Error */
-/* .alert-danger {
-  background-color: lighten(var(--alert-error), 46%);
-  border-color: lighten(var(--alert-error), 38%);
+.alert-error {
+  background-color: var(--alert-error-bg);
+  border-color: var(--alert-error-border);
 
-  .alert-text h5 {
+  & .alert-text h5 {
     color: var(--alert-error);
   }
 
-  button.close {
+  & button.close {
     color: var(--alert-error);
   }
 
-  .alert-icon {
+  & .alert-icon {
     background-color: var(--alert-error);
   }
-} */
+}
 
 /* Success */
 .alert-success {
