@@ -34,7 +34,7 @@ func saveData(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		// http.Error(w, err.Error(), http.StatusBadRequest)
 		result.Success = false
-		result.Message = "Colud not save the data. " + err.Error()
+		result.Message = "Unable to save the data. " + err.Error()
 		result.ErrorObject = err
 		log.Printf(" - Issues decoding/saving application data")
 	} else {
@@ -46,7 +46,7 @@ func saveData(w http.ResponseWriter, r *http.Request) {
 		encoder.Encode(appData)
 
 		result.Success = true
-		result.Message = "devices data saved to devices.json file. There are now " + strconv.Itoa(len(appData.Devices)) + " device defined in the list."
+		result.Message = "Devices data saved to devices.json file. There are now " + strconv.Itoa(len(appData.Devices)) + " device(s) defined in the list."
 		log.Printf(" - New application data saved to file devices.json")
 	}
 	json.NewEncoder(w).Encode(result)
