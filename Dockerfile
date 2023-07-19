@@ -12,6 +12,7 @@ COPY . .
 # Install Dependecies
 RUN apk update && apk upgrade && \
     apk add --no-cache git && \
+    git clone https://github.com/sameerdhoot/wolweb . && \
     go mod tidy && \
     go mod download
 
