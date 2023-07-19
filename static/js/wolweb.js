@@ -74,7 +74,6 @@ function renderData() {
                 })
                 .append($insertIcon)
                 .append("SAVE")
-                // .html("<i class=\"fas fa-save\"></i>SAVE")
                 .on("click", function () {
                     grid.insertItem().done(function () {
                         grid.clearInsert();
@@ -88,29 +87,34 @@ function renderData() {
     var gridFields = [];
     var gridWidth = "100%";
 
+    // Device Column
     gridFields.push({
         name: "name", title: "Device",
         type: "text",
-        width: "calc((100% - 300px)*0.33)", 
+        width: "calc((100% - 300px) * 0.33)", 
         validate: {
             validator: "required",
             message: "Device name is a required field."
         }
     });
+
+    // MAC Address Column
     gridFields.push({
         name: "mac", title: "MAC Address",
         type: "text",
-        width: "calc((100% - 300px)*0.33)",
+        width: "calc((100% - 300px) * 0.33)",
         validate: {
             validator: "pattern",
             param: /^[0-9a-f]{1,2}([\.:-])(?:[0-9a-f]{1,2}\1){4}[0-9a-f]{1,2}$/gmi,
             message: "MAC Address is a required field."
         }
     });
+
+    // Broadcast IP Column
     gridFields.push({
         name: "ip", title: "Broadcast IP",
         type: "text",
-        width: "calc((100% - 300px)*0.33)",
+        width: "calc((100% - 300px) * 0.33)",
         validate: {
             validator: "required",
             message: "Broadcast IP Address is a required field."
@@ -123,15 +127,24 @@ function renderData() {
         },
         // editing: false
     });
+
+    // Wake-up Action Column
     gridFields.push({
         name: "command", type: "control", width: 125, modeSwitchButton: false,
         itemTemplate: function (value, item) {
-            return $("<button>").addClass("btn btn-primary btn-sm")
+            var $wakeUpIcon = $("<i>").attr({
+                class: "bi bi-lightning-fill",
+                style: "margin-right: 6px"
+            });
+
+            return $("<button>")
                 .attr({
+                    class: "btn btn-primary btn-sm",
                     type: "button",
                     title: "Send magic packet" 
                 })
-                .html("<i class=\"bi bi-lightning-fill\" style=\"margin-right: 6px;\"></i>WAKE-UP")
+                .append($wakeUpIcon)
+                .append("WAKE-UP")
                 .on("click", function () {
                     $.wakeUpDeviceByName(item.name)
                 });
@@ -139,8 +152,12 @@ function renderData() {
         editTemplate: function (value, item) { return "" },
         insertTemplate: function () { return "" }
     });
+
+    // Modify Data Column
     gridFields.push({
         name: "control", type: "bscontrol", width: 100, editButton: false, deleteButton: false, modeSwitchButton: true,
+
+        // Button controls for adding new items (First Row)
         headerTemplate: function () {
             var grid = this._grid;
             var isInserting = grid.inserting;
@@ -149,9 +166,14 @@ function renderData() {
                 style: "margin-right: 6px; -webkit-text-stroke: 1px"
             });
 
-            var $button = $("<button>").addClass("btn btn-info btn-sm device-insert-button")
-                .attr({ type: "button", title: "Add new Device" })
-                .html("<i class=\"bi bi-plus-lg\" style=\"margin-right: 6px; -webkit-text-stroke: 1px black;\"></i>NEW")
+            var $button = $("<button>")
+                .attr({
+                    class: "btn btn-info btn-sm device-insert-button",
+                    type: "button",
+                    title: "Add new Device"
+                })
+                .append($insertIcon)
+                .append("NEW")
                 .on("click", function () {
                     isInserting = !isInserting;
                     grid.option("inserting", isInserting);
@@ -159,6 +181,8 @@ function renderData() {
 
             return $button;
         },
+
+        // Button controls when displaying devices
         itemTemplate: function(value, item) {
             var grid = this._grid;
             var $editIcon = $("<i>").attr({
@@ -197,6 +221,8 @@ function renderData() {
                 .append($customEditButton)
                 .append($customDeleteButton);
         },
+
+        // Button controls when editing existing devices
         editTemplate: function () {
             var grid = this._grid;
             var $updateIcon = $("<i>").attr({
