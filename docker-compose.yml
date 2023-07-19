@@ -12,9 +12,9 @@ services:
 
     # Have to use host mode as bridge network has issues with UDP broadcast
     # https://github.com/docker/for-linux/issues/637
-    ports:
-      - 8089:8089
-    # network_mode: host
+    # ports:
+    #   - 12345:8089
+    network_mode: host
 
     # Use environment variable below to change port or virtual directory.
     #environment:
