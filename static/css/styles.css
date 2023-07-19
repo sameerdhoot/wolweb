@@ -5,6 +5,17 @@
   }
 }
 
+/* --------- Adaptive Navbar Background --------- */
+html[data-bs-theme="light"] {
+  & nav.navbar {
+    background-color: var(--bs-gray-900);
+  }
+}
+html[data-bs-theme="dark"] {
+  & nav.navbar {
+    background-color: rgb(var(--bs-emphasis-color-rgb), 0.1);
+  }
+}
 
 
 

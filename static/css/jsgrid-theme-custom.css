@@ -1,21 +1,32 @@
 /*
-* jsGrid v1.5.3 (http://js-grid.com)
-* (c) 2016 Artem Tabalin
-* Licensed under MIT (https://github.com/tabalinas/jsgrid/blob/master/LICENSE)
+* Customised Theme for use with jsGrid
+* (c) 2023
+* Project Page: https://github.com/sameerdhoot/wolweb
 */
 
-.jsgrid-edit-row>.jsgrid-cell,
-.jsgrid-filter-row>.jsgrid-cell,
+.jsgrid-edit-row > .jsgrid-cell,
+.jsgrid-filter-row > .jsgrid-cell,
 .jsgrid-grid-body,
 .jsgrid-grid-header,
-.jsgrid-header-row>.jsgrid-header-cell,
-.jsgrid-insert-row>.jsgrid-cell {
-    border-color: var(--bs-border-color);
+.jsgrid-header-row > .jsgrid-header-cell,
+.jsgrid-insert-row > .jsgrid-cell {
+    border-color: var(--bs-border-color) !important;
 }
 
-.jsgrid-header-row>.jsgrid-header-cell {
+.jsgrid-header-row > .jsgrid-header-cell {
     border-top: 0;
-    background-color: #eeeef2 !important;
+    border-bottom: 1px solid;
+}
+
+.jsgrid-header-row > .jsgrid-header-cell,
+.jsgrid-grid-header {
+    background-color: rgb(var(--bs-emphasis-color-rgb), 5%) !important;
+}
+
+/* --------- Theme-specific customisations --------- */
+html[data-bs-theme="light"] {
+}
+html[data-bs-theme="dark"] {
 }
 
 .jsgrid-filter-row>.jsgrid-cell:first-child,
@@ -33,10 +44,6 @@
 .jsgrid-header-row .jsgrid-align-left,
 .jsgrid-header-row .jsgrid-align-right {
     text-align: center
-}
-
-.jsgrid-grid-header {
-    background: #f9f9f9
 }
 
 .jsgrid-header-scrollbar {
@@ -100,38 +107,31 @@
 }
 
 .jsgrid-grid-body .jsgrid-cell:first-child {
-    border-left: none
+    border-left: none;
 }
 
 .jsgrid-grid-body .jsgrid-cell:last-child {
-    border-right: none
+    border-right: none;
 }
 
 .jsgrid-row>.jsgrid-cell {
-    background: #fff
+    background-color: rgb(var(--bs-emphasis-color-rgb), 0%);
 }
 
 .jsgrid-alt-row>.jsgrid-cell {
-    background: #fcfcfc
-}
-
-.jsgrid-header-row>.jsgrid-header-cell {
-    background: #f9f9f9;
-    border-bottom: 1px solid;
-    border-color: var(--bs-border-color);
-
+    background-color: rgb(var(--bs-emphasis-color-rgb), 2.5%);
 }
 
 .jsgrid-filter-row>.jsgrid-cell {
-    background: #fcfcfc
+    background-color: rgb(var(--bs-emphasis-color-rgb), 3%);
 }
 
 .jsgrid-insert-row>.jsgrid-cell {
-    background: #e3ffe5
+    background-color: rgb(25, 135 ,84 , 20%);
 }
 
 .jsgrid-edit-row>.jsgrid-cell {
-    background: #fdffe3
+    background-color: rgb(217, 177, 55, 25%);
 }
 
 .jsgrid-edit-row input,
@@ -152,11 +152,11 @@
 }
 
 .jsgrid-selected-row>.jsgrid-cell {
-    background: #deefff;
+    background-color: rgb(var(--bs-primary-rgb), 15%)
 }
 
 .jsgrid-nodata-row>.jsgrid-cell {
-    background: #fff
+    background-color: rgb(var(--bs-emphasis-color-rgb), 0%)
 }
 
 .jsgrid-invalid input,
