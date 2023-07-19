@@ -4,7 +4,7 @@ $(document).ready(function () {
 
         $('#snackbar > .alert-text > p').text(data.message);
         if (data.error != null) {
-            $('#snackbar').addClass('alert-danger');
+            $('#snackbar').addClass('alert-error');
             $('#snackbar > .alert-icon > i').addClass('bi-exclamation-triangle-fill');
             $('#snackbar').removeClass('alert-success');
             $('#snackbar > .alert-icon > i').removeClass('bi-check-circle-fill');
@@ -13,7 +13,7 @@ $(document).ready(function () {
         } else {
             $('#snackbar').addClass('alert-success');
             $('#snackbar > .alert-icon > i').addClass('bi-check-circle-fill')
-            $('#snackbar').removeClass('alert-danger');
+            $('#snackbar').removeClass('alert-error');
             $('#snackbar > .alert-icon > i').removeClass('bi-exclamation-triangle-fill');
 
             $('#snackbar > .alert-text > h5').text('Success');

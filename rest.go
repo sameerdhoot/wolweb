@@ -38,12 +38,12 @@ func wakeUpWithDeviceName(w http.ResponseWriter, r *http.Request) {
 					// We got an internal Error on SendMagicPacket
 					w.WriteHeader(http.StatusInternalServerError)
 					result.Success = false
-					result.Message = "Internal error on Sending the Magic Packet"
+					result.Message = "An internal error occurred while sending the Magic Packet."
 					result.ErrorObject = err
 				} else {
 					// Horray we send the WOL Packet succesfully
 					result.Success = true
-					result.Message = fmt.Sprintf("Sent magic packet to device %s with Mac %s on Broadcast IP %s", c.Name, c.Mac, c.BroadcastIP)
+					result.Message = fmt.Sprintf("Sent magic packet to device '%s' with MAC '%s' on Broadcast IP '%s'.", c.Name, c.Mac, c.BroadcastIP)
 					result.ErrorObject = nil
 				}
 			}
@@ -52,7 +52,7 @@ func wakeUpWithDeviceName(w http.ResponseWriter, r *http.Request) {
 		if result.Success == false && result.ErrorObject == nil {
 			// We could not find the Devicename
 			w.WriteHeader(http.StatusNotFound)
-			result.Message = fmt.Sprintf("Device name %s could not be found", deviceName)
+			result.Message = fmt.Sprintf("Device name %s could not be found.", deviceName)
 		}
 	}
 	json.NewEncoder(w).Encode(result)
