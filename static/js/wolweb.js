@@ -76,7 +76,7 @@ function renderData() {
     gridFields.push({
         name: "name", title: "Device",
         type: "text",
-        width: "calc((100% - 300px) * 0.33)", 
+        width: null,
         validate: {
             validator: "required",
             message: "Device name is a required field."
@@ -87,7 +87,7 @@ function renderData() {
     gridFields.push({
         name: "mac", title: "MAC Address",
         type: "text",
-        width: "calc((100% - 300px) * 0.33)",
+        width: null,
         validate: {
             validator: "pattern",
             param: /^[0-9a-f]{1,2}([\.:-])(?:[0-9a-f]{1,2}\1){4}[0-9a-f]{1,2}$/gmi,
@@ -99,7 +99,7 @@ function renderData() {
     gridFields.push({
         name: "ip", title: "Broadcast IP",
         type: "text",
-        width: "calc((100% - 300px) * 0.33)",
+        width: null,
         validate: {
             validator: "required",
             message: "Broadcast IP Address is a required field."
