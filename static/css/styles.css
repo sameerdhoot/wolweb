@@ -7,11 +7,17 @@
 
 /* --------- Adaptive Navbar Background --------- */
 html[data-bs-theme="light"] {
+  --alert-error-bg: #f3cdcd;
+  --alert-success-bg: #e1ede1;
+
   & nav.navbar {
     background-color: var(--bs-gray-900);
   }
 }
 html[data-bs-theme="dark"] {
+  --alert-error-bg: #f3cdcd;
+  --alert-success-bg: #3e503e;
+
   & nav.navbar {
     background-color: rgb(var(--bs-emphasis-color-rgb), 0.1);
   }
@@ -24,20 +30,14 @@ html[data-bs-theme="dark"] {
 :root {
   --alert-help: #ffab00;
   --alert-help-border: #ffab00;
-  
   --alert-warning: #ff5400;
   --alert-warning-border: #ff5400;
-  
   --alert-info: #3592ff;
   --alert-info-border: #3592ff;
-  
   --alert-error: #d33534;
   --alert-error-border: #e89292;
-  --alert-error-bg: #f3cdcd;
-  
   --alert-success: #42ae42;
   --alert-success-border: #81cf81;
-  --alert-success-bg: #e1ede1;
 }
 
 /* --------- Alert Adjustments --------- */
@@ -74,7 +74,7 @@ html[data-bs-theme="dark"] {
 }
 
 .alert-text {
-  color: #2d3a51; /* This should be whatever the defualt body copy color is for FIRECARES */
+  color: var(--bs-body-color);
   padding: 0.75rem;
   width: 100%;
 }
