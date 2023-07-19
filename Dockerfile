@@ -2,12 +2,10 @@
 FROM golang:1.20-alpine AS builder
 
 LABEL org.label-schema.vcs-url="https://github.com/sameerdhoot/wolweb" \
-      org.label-schema.url="https://github.com/sameerdhoot/wolweb/blob/master/README.md"
+    org.label-schema.url="https://github.com/sameerdhoot/wolweb/blob/master/README.md"
 
 RUN mkdir /wolweb
 WORKDIR /wolweb
-
-COPY . .
 
 # Install Dependecies
 RUN apk update && apk upgrade && \
@@ -28,10 +26,13 @@ COPY --from=builder /wolweb/devices.json .
 COPY --from=builder /wolweb/config.json .
 COPY --from=builder /wolweb/static ./static
 
+RUN apk add --no-cache curl
+
 ARG WOLWEBPORT=8089
+ENV WOLWEBPORT=${WOLWEBPORT}
 
 CMD ["/wolweb/wolweb"]
 
 EXPOSE ${WOLWEBPORT}
 HEALTHCHECK --interval=5s --timeout=3s \
-  CMD curl --silent --show-error --fail http://localhost:${WOLWEBPORT}/wolweb/health || exit 1
+    CMD curl --silent --show-error --fail http://localhost:${WOLWEBPORT}/wolweb/health || exit 1
