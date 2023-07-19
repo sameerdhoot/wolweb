@@ -1,21 +1,22 @@
 [![made-with-Go](https://img.shields.io/badge/Made%20with-Go-orange)](http://golang.org) [![proc-arch](https://img.shields.io/badge/Arch-x86%20%7C%20AMD64%20%7C%20ARM5%20%7C%20ARM7-blue)](http://golang.org) [![os](https://img.shields.io/badge/OS-Linux%20%7C%20Windows%20%7C%20Darwin-yellowgreen)](http://golang.org)
 
 
-# Web interface for sending Wake-on-lan (magic packet)
+# Web interface for sending Wake-on-LAN (Magic Packet)
 
-A GoLang based HTTP server which will send a Wake-on-lan package (magic packet) on local network. The request can be send using web interface or directly using HTTP request with mapped device name in the URL. The only computing device I have running 24x7 is handy-dandy Raspberry Pi 4 (4gb) with docker containers. All other devices like server, laptop and NAS as powered only when I need them. I needed a way to easily turn them on specifically when trying to automate things like nightly builds.
+A GoLang based HTTP server which will send a Wake-on-LAN package (magic packet) on local network. The request can be send using web interface or directly using HTTP request with mapped device name in the URL. The only computing device I have running 24x7 is handy-dandy Raspberry Pi 4 (4gb) with docker containers. All other devices like server, laptop and NAS as powered only when I need them. I needed a way to easily turn them on specifically when trying to automate things like nightly builds.
 
-I use this application behind NGINX web proxy which is secured with HTTPS certificate. It has no authentication, but it is home network and the reason I built this was to have no authentication. I have the same functionality provided in my home router, but I have to login and go through several clicks. Also, this app runs as docker image so even if it is hacked, it reduces the attack surface.
+This application is intended do be used in conjunction with a reverse proxy and secured with an SSL certificate. As the intended use case was with home networks, the application has no in-built authentication. While this could pose a slight security risk even if this was hacked to application is intended to be containerised so the attack surface if limited.
 
 I have bookmarked direct link to device(s) on my browsers to wake them using single HTTP call for ease of access.
 
-Things I use this for:
-- to wake-up my home laptop remotely. I use my home laptop remotely over RDP.
-- this is also helpful in building routines which will wake up my server and nightly builds and when it is all done, go back to sleep. I don't keep my home lab running 24x7 as it is a waste of energy.
-- to turn on my NAS and laptop to start the weekly backup from laptop to NAS.
-- to turn on NAS quickly when we are watching movies stored on NAS.
+Use cases:
+- Wake-up my home computers remotely, for access remotely over RDP.
+- Integration with automated routines to allow parts of a home lab to sleep instead of running 24x7 to save energy.
 
-> It was tricky to configure the wol feature on my Dell Laptop. NAS and Dell servers were easy to configure. Follow this article for [Dell laptop](https://www.dell.com/support/article/en-us/sln305365/how-to-setup-wake-on-lan-wol-on-your-dell-system?lang=en) 
+## Configuring WOL
+
+On some devices WOL can be difficult to correctly configure and have work reliably.
+> Follow this article for [Dell Laptops](https://www.dell.com/support/article/en-us/sln305365/how-to-setup-wake-on-lan-wol-on-your-dell-system?lang=en).
 
 ## Bootstrap UI with JS Grid for editing data
 
