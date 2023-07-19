@@ -23,6 +23,18 @@ html[data-bs-theme="dark"] {
   }
 }
 
+.api-method-pill {
+  background: var(--bs-primary);
+  border-radius: 80px;
+  padding: 0 15px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  justify-content: center;
+  color: white;
+}
+
 
 
 
