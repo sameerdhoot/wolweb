@@ -30,7 +30,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.REPO_WOLWEB_CI }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and Push Alpine Dockerfile
         id: docker_build
