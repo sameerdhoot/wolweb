@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - sameerdhoot-patch-
+      - sameerdhoot-patch-1
     paths-ignore:
       - "README.md"
       - "LICENSE"
