@@ -23,6 +23,6 @@ jobs:
         uses: macbre/push-to-ghcr@v9
         with:
           image_name: ${{ github.repository }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.REPO_WOLWEB_CI }}
           dockerfile: Dockerfile
           image_tag: latest
