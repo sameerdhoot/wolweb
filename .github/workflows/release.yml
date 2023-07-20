@@ -5,6 +5,8 @@ on:
   push:
     tags:
       - '*'
+    branches:
+      - main
 
 jobs:
   release:
