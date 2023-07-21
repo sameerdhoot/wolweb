@@ -1,9 +1,9 @@
 version: "3"
 services:
   wolweb:
-    build: .
-    image: wolweb:latest
     container_name: wolweb
+    image: "ghcr.io/sameerdhoot/wolweb"
+    restart: always
     
     # make sure that the file exists in local directory from where you are running the compose file
     # Or, initialize empty json file by running command "echo '{}' > devices.json"
@@ -17,7 +17,7 @@ services:
     network_mode: host
 
     # Use environment variable below to change port or virtual directory.
-    #environment:
-      #WOLWEBPORT: "8089"
+    environment:
+      WOLWEBPORT: "8089"
       #WOLWEBVDIR: "/wolweb"
-      #WOLWEBBCASTIP: "192.168.1.255:9"
+      WOLWEBBCASTIP: "10.10.10.255:9"
