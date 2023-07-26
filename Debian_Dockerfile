@@ -1,5 +1,5 @@
 # docker build -t wolweb .
-FROM golang:buster AS builder
+FROM golang:1.20-buster AS builder
 
 LABEL org.label-schema.vcs-url="https://github.com/sameerdhoot/wolweb" \
       org.label-schema.url="https://github.com/sameerdhoot/wolweb/blob/master/README.md"
@@ -9,9 +9,8 @@ WORKDIR /wolweb
 
 # Install Dependecies
 RUN git clone https://github.com/sameerdhoot/wolweb . && \
-    go get -d github.com/gorilla/handlers && \
-    go get -d github.com/gorilla/mux && \
-    go get -d github.com/ilyakaznacheev/cleanenv
+    go mod tidy && \
+    go mod download
 
 # Build Source Files
 RUN go build -o wolweb . 
@@ -25,8 +24,16 @@ COPY --from=builder /wolweb/devices.json .
 COPY --from=builder /wolweb/config.json .
 COPY --from=builder /wolweb/static ./static
 
+RUN DEBIAN_FRONTEND=noninteractive apt-get update \
+ && apt-get install -y \
+    curl \
+ && rm -rf /var/lib/apt/lists/*
+
 ARG WOLWEBPORT=8089
+ENV WOLWEBPORT=${WOLWEBPORT}
 
 CMD ["/wolweb/wolweb"]
 
 EXPOSE ${WOLWEBPORT}
+HEALTHCHECK --interval=5s --timeout=3s \
+  CMD curl --silent --show-error --fail http://localhost:${WOLWEBPORT}/wolweb/health || exit 1
