@@ -11,15 +11,11 @@ html {
 
 
 /* --------- Adaptive Backgrounds --------- */
-html[data-bs-theme="light"] {
-  & nav.navbar {
+html[data-bs-theme="light"] nav.navbar {
     background-color: var(--bs-gray-900);
   }
-}
-html[data-bs-theme="dark"] {
-  & nav.navbar {
+html[data-bs-theme="dark"] nav.navbar {
     background-color: rgb(var(--bs-emphasis-color-rgb), 10%);
-  }
 }
 
 
@@ -32,31 +28,23 @@ html[data-bs-theme="dark"] {
   overflow: hidden;
   background-color: rgb(var(--active-alert-color), 19%);
   border-color: rgb(var(--active-alert-color), 60%);
-
-  & button.close {
-    margin: 0.45rem 1rem;
-    color: rgb(var(--active-alert-color));
-    opacity: 0.75;
-    & :hover {
-      opacity: 1;
-    }
-  }
-
-  & ul {
-    margin: 0;
-    & li {
-      margin-bottom: 0.2rem;
-      & :last-child {
-        margin-bottom: 0;
-      }
-    }
-  }
-
-  & .alert-link {
-    font-weight: normal;
-    color: rgb(var(--alert-link));
-  }
 }
+.alert .alert-link {
+  font-weight: normal;
+  color: rgb(var(--alert-link));
+}
+.alert:hover {
+  background-color: red;
+}
+.alert button.close {
+  margin: 0.45rem 1rem;
+  color: rgb(var(--active-alert-color));
+  opacity: 0.75;
+}
+.alert button.close:hover { opacity: 1; }
+.alert ul { margin: 0; }
+.alert ul li { margin-bottom: 0.2rem; }
+.alert ul li:last-child { margin-bottom: 0; }
 
 .alert-icon, .alert-text {
   display: table-cell;
@@ -76,12 +64,11 @@ html[data-bs-theme="dark"] {
   color: var(--bs-body-color);
   padding: 0.75rem;
   width: 100%;
-
-  & h5 {
-    margin-top: 0;
-    font-weight: 600;
-    color: rgb(var(--active-alert-color));
-  }
+}
+.alert-text h5 {
+  margin-top: 0;
+  font-weight: 600;
+  color: rgb(var(--active-alert-color));
 }
 
 
@@ -104,6 +91,7 @@ html[data-bs-theme="dark"] {
   }
 }
 
+
 .code-container {
   padding: 8px 12px;
   background: rgb(var(--bs-emphasis-color-rgb), 5%);
@@ -118,10 +106,10 @@ html[data-bs-theme="dark"] {
   align-items: center;
   padding-top: 20px;
   padding-bottom: 8px;
-
-  & .table-controls { margin-left: auto; }
-  & h3 { margin: 0; }
 }
+.section-header .table-controls { margin-left: auto; }
+.section-header h3 { margin: 0; }
+
 
 .api-method-pill {
   background: var(--bs-primary);
@@ -134,9 +122,8 @@ html[data-bs-theme="dark"] {
   width: fit-content;
   justify-content: center;
   color: white;
-
-  & p {
-    margin-bottom: 0;
-    font-size: smaller;
-  }
+}
+.api-method-pill p {
+  margin-bottom: 0;
+  font-size: smaller;
 }
