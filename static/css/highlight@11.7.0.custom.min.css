@@ -1,0 +1,114 @@
+/*!
+  Customised for use with WOLWEB
+  ---
+  Description: Original highlight.js style
+  Author: (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
+  Maintainer: @highlightjs/core-team
+  Website: https://highlightjs.org/
+  License: see project LICENSE
+  Touched: 2021
+*/
+html[data-bs-theme="light"] {
+  --highlightjs-body: var(--bs-body-color);
+  --highlightjs-type: 136, 0, 0;
+  --highlightjs-literal: 101, 153, 84;
+}
+html[data-bs-theme="dark"] {
+  --highlightjs-body: var(--bs-body-color);
+  --highlightjs-type: 158, 62, 0;
+  --highlightjs-literal: 102, 153, 85;
+}
+
+pre {
+  margin: 0;
+  display: flex;
+}
+
+pre code.hljs {
+  display: block;
+  overflow-x: auto;
+  margin: 0;
+  padding: 0;
+}
+
+.hljs {
+  color: rgb(var(--highlightjs-body));
+}
+
+.hljs-comment {
+  color: #697070
+}
+
+.hljs-punctuation,
+.hljs-tag {
+  color: rgb(var(--highlightjs-body), 67%)
+}
+
+.hljs-tag .hljs-attr,
+.hljs-tag .hljs-name {
+  color: rgb(var(--highlightjs-body));
+}
+
+.hljs-attribute,
+.hljs-doctag,
+.hljs-keyword,
+.hljs-meta .hljs-keyword,
+.hljs-name,
+.hljs-selector-tag {
+  font-weight: 700
+}
+
+.hljs-deletion,
+.hljs-number,
+.hljs-quote,
+.hljs-selector-class,
+.hljs-selector-id,
+.hljs-string,
+.hljs-template-tag,
+.hljs-type {
+  color: rgb(var(--highlightjs-type));
+}
+
+.hljs-section,
+.hljs-title {
+  color: rgb(var(--highlightjs-type));
+  font-weight: 700;
+}
+
+.hljs-link,
+.hljs-operator,
+.hljs-regexp,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-symbol,
+.hljs-template-variable,
+.hljs-variable {
+  color: #ab5656
+}
+
+.hljs-literal {
+  color: rgb(var(--highlightjs-literal));
+}
+
+.hljs-addition,
+.hljs-built_in,
+.hljs-bullet,
+.hljs-code {
+  color: #397300
+}
+
+.hljs-meta {
+  color: #1f7199
+}
+
+.hljs-meta .hljs-string {
+  color: #38a
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: 700;
+}

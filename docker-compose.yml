@@ -5,8 +5,8 @@ services:
     image: "ghcr.io/sameerdhoot/wolweb"
     restart: always
     
-    # make sure that the file exists in local directory from where you are running the compose file
-    # Or, initialize empty json file by running command "echo '{}' > devices.json"
+    # Make sure that the file exists in local directory from where you are running the compose file;
+    # or initialize empty json file by running command "echo '{}' > devices.json".
     volumes:
       - ./devices.json:/wolweb/devices.json
 

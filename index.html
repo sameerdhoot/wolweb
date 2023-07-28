@@ -13,9 +13,9 @@
     <link type="text/css" rel="stylesheet" href="static/bootstrap/css/bootstrap-icons@1.10.5.css">
     <link type="text/css" rel="stylesheet" href="static/css/jsgrid@1.5.3.min.css" />
     <link type="text/css" rel="stylesheet" href="static/css/jsgrid-theme-custom.css" />
-    <link type="text/css" rel="stylesheet" href="static/css/Navbar-Right-Links-Dark-icons.css">
-    <link type="text/css" rel="stylesheet" href="static/css/styles.css">
-    <link type="text/css" rel="stylesheet" href="static/css/wolweb.css">
+    <link type="text/css" rel="stylesheet" href="static/css/Navbar-Right-Links-Dark-icons.css" />
+    <link type="text/css" rel="stylesheet" href="static/css/wolweb.css" />
+    <link type="text/css" rel="stylesheet" href="static/css/highlight@11.7.0.custom.min.css" />
 </head>
 
 <body>
@@ -23,19 +23,26 @@
         <div class="container">
             <a class="navbar-brand d-flex align-items-center">
                 <span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-power" style="font-size: 20px;">
-                        <path d="M7.5 1v7h1V1h-1z"></path>
-                        <path
-                            d="M3 8.812a4.999 4.999 0 0 1 2.578-4.375l-.485-.874A6 6 0 1 0 11 3.616l-.501.865A5 5 0 1 1 3 8.812z">
-                        </path>
-                    </svg>
+                    <i class="bi bi-power" style="font-size: 19px;"></i>
                 </span>
                 <span class="fw-bold">Wake-on-LAN Service</span>
             </a>
         </div>
     </nav>
     <div class="container">
-        <h3 style="padding-top: 20px;">Devices</h3>
+        <div class="section-header">
+            <h3>Devices</h3>
+            <div class="table-controls">
+                <div class="btn-group">
+                    <button id="device-insert-btn" class="btn btn-sm btn-outline-success" type="button" title="Add new device">
+                        <i class="bi bi-plus-lg" style="margin-right: 6px;"></i>NEW
+                    </button>
+                    <button id="device-filter-btn" class="btn btn-sm btn-outline-secondary" type="button" title="Filter devices">
+                        <i class="bi bi-filter" style="margin-right: 6px;"></i>FILTER
+                    </button>
+                </div>
+            </div>
+        </div>
         <div id="snackbar" class="alert hideMe">
             <div class="alert-icon">
                 <i class="bi"></i>
@@ -46,19 +53,16 @@
             </div>
             
         </div>
-        <div id="GridDevices">
-        </div>
+        <div id="GridDevices"></div>
         <hr>
-        <h3 style="padding-top: 20px;">Wake-up directly using HTTP Requests</h3>
+        <div class="section-header">
+            <h3>Wake-up directly using HTTP Requests</h3>
+        </div>
         <h6 style="margin-top: -4px;">/wolweb/wake/<span class="text-secondary">&lt;Device Name&gt;</span>&nbsp;- Returns a JSON object</h6>
-        <div style="background: rgb(var(--bs-emphasis-color-rgb), 0.05);padding: 8px;padding-left: 12px;padding-right: 12px;border-radius: 8px;overflow: scroll;margin-bottom: 12px;">
-            <code class="text-nowrap">
-                <span>{</span><br>
-                <span>&nbsp; &nbsp; "success":true,</span><br>
-                <span>&nbsp; &nbsp; "message":"Sent magic packet to device Server with Mac 34:E6:D7:33:12:71 on Broadcast IP 192.168.1.255:9",</span><br>
-                <span>&nbsp; &nbsp; "error":null</span><br>
-                <span>}</span>
-            </code>
+        <div class="code-container ">
+            <pre>
+                <code id="code-element" class="language-json"></code>
+            </pre>
         </div>
         <div class="table-responsive">
             <table class="table">
@@ -66,6 +70,7 @@
                     <tr>
                         <th>Parameter</th>
                         <th>Value</th>
+                        <th>Type</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -76,48 +81,46 @@
                                 <p>GET</p>
                             </div>
                         </td>
+                        <td></td>
                     </tr>
                     <tr>
-                        <td>Success&nbsp;&nbsp;
-                            <span style="font-style: italic;font-size: 12px;">Type:&nbsp;BOOLEAN</span>&nbsp;
-                        </td>
+                        <td>Success</td>
                         <td>Returns a value based on whether the magic packet was sent</td>
+                        <td>Boolean</td>
                     </tr>
                     <tr>
-                        <td>Message&nbsp;&nbsp;
-                            <span style="font-style: italic;font-size: 12px;">Type:&nbsp;STRING</span>
-                        </td>
+                        <td>Message</td>
                         <td>Returns a description of any action taken</td>
+                        <td>String</td>
                     </tr>
                     <tr>
-                        <td>Error&nbsp;&nbsp;
-                            <span style="font-style: italic;font-size: 12px;">Type:&nbsp;JSONObject</span>
-                        </td>
+                        <td>Error</td>
                         <td>Returns errors as a JSON, converted from any raised GOLANG Error Objects</td>
+                        <td>JSONObject</td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <hr>
         <p style="font-size: 13px;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
-                viewBox="0 0 16 16" class="bi bi-github" style="margin-top: -2px;margin-right: 4px;">
-                <path
-                    d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z">
-                </path>
-            </svg>
+            <i class="bi bi-github" style="margin-right: 4px;"></i>
             Project Page:&nbsp;<a href="https://github.com/sameerdhoot/wolweb">https://github.com/sameerdhoot/wolweb</a>
         </p>
     </div>
-    <script>
-        window.vDir = "{{$.VDir}}"
-        window.bCastIP = "{{$.BCastIP}}"
-    </script>
     <script type="text/javascript" src="static/js/jquery@3.2.1.min.js"></script>
     <script type="text/javascript" src="static/js/tether@1.4.0.min.js"></script>
     <script type="text/javascript" src="static/js/jsgrid@1.5.3.js"></script>
     <script type="text/javascript" src="static/js/wolweb.js"></script>
     <script type="text/javascript" src="static/bootstrap/js/bootstrap@5.2.3.min.js"></script>
     <script type="text/javascript" src="static/bootstrap/js/bootstrap-auto-dark-mode.js"></script>
+    <script type="text/javascript" src="static/js/highlight@11.7.0.js"></script>
+    <script>
+        window.vDir = "{{$.VDir}}"
+        window.bCastIP = "{{$.BCastIP}}"
+        
+        $( "#code-element" ).load( "static/api-sample.txt" , function() {
+            hljs.highlightAll();
+        });
+    </script>
 </body>
 </html>
