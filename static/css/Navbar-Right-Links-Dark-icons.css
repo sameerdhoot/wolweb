@@ -1,3 +1,8 @@
+/*
+* Bootstrap Plug-in for Navbar Element
+* (c) 2023
+*/
+
 .bs-icon {
   --bs-icon-size: .75rem;
   display: flex;
@@ -54,8 +59,3 @@
 .bs-icon.bs-icon-circle {
   border-radius: 50%;
 }
-
-.table > tbody {
-  vertical-align: middle;
-}
-
