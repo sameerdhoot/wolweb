@@ -2,28 +2,31 @@ $(document).ready(function () {
 
     jQuery.showSnackBar = function (data) {
 
+        // Reset the alert box to default classes
+        $('#snackbar').removeClass()
+        $('#snackbar > .alert-icon > i').removeClass();
+        $('#snackbar').addClass('alert hideMe')
+        
+        // Set alert message
         $('#snackbar > .alert-text > p').text(data.message);
-        if (data.error != null) {
+
+        // Check if provided data contains errors
+        if (!data.success || data.error != null) {
             $('#snackbar').addClass('alert-error');
             $('#snackbar > .alert-icon > i').addClass('bi-exclamation-triangle-fill');
-            $('#snackbar').removeClass('alert-success');
-            $('#snackbar > .alert-icon > i').removeClass('bi-check-circle-fill');
-            
             $('#snackbar > .alert-text > h5').text("Error");
         } else {
             $('#snackbar').addClass('alert-success');
-            $('#snackbar > .alert-icon > i').addClass('bi-check-circle-fill')
-            $('#snackbar').removeClass('alert-error');
-            $('#snackbar > .alert-icon > i').removeClass('bi-exclamation-triangle-fill');
-
             $('#snackbar > .alert-text > h5').text('Success');
+            $('#snackbar > .alert-icon > i').addClass('bi-check-circle-fill')
+            
+            // After 2 seconds, hide the Div Again
+            setTimeout(function () {
+                $('#snackbar').hide();
+            }, 2000);
         }
+        
         $('#snackbar').show();
-
-        // After 2 seconds, hide the Div Again
-        setTimeout(function () {
-            $('#snackbar').hide();
-        }, 2000);
     };
 
     jQuery.wakeUpDeviceByName = function (deviceName) {
@@ -33,10 +36,10 @@ $(document).ready(function () {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
-                $.showSnackBar(data);
+                $.showSnackBar(data.responseJSON ?? data);
             },
             error: function (data, err) {
-                $.showSnackBar(data);
+                $.showSnackBar(data.responseJSON ?? data);
                 console.error(data);
             }
         })
@@ -55,7 +58,10 @@ function getAppData() {
         }
         renderData();
     }).fail(function (data) {
-        alert("Error: Problem with getting data from the service.");
+        data.error = true;
+        data.message = "Unable to retrieve device data!";
+        $.showSnackBar(data);
+        console.error(data);
     });
 
 }
@@ -115,7 +121,10 @@ function renderData() {
 
     // Wake-up Action Column
     gridFields.push({
-        name: "command", type: "control", width: 125, modeSwitchButton: false,
+        name: "command", title: "Action",
+        type: "control",
+        width: 125,
+        modeSwitchButton: false,
         itemTemplate: function (value, item) {
             var $wakeUpIcon = $("<i>").attr({
                 class: "bi bi-lightning-fill",
@@ -135,39 +144,14 @@ function renderData() {
                 });
         },
         editTemplate: function (value, item) { return "" },
-        insertTemplate: function () { return "" }
+        insertTemplate: function () { return "" },
+        filterTemplate: function () { return "" }
     });
 
     // Modify Data Column
     gridFields.push({
-        name: "control", type: "bscontrol", width: 100, editButton: false, deleteButton: false, modeSwitchButton: true,
-
-        // Button controls for adding new items (First Row)
-        headerTemplate: function () {
-            var grid = this._grid;
-            var isInserting = grid.inserting;
-            var $insertIcon = $("<i>").attr({
-                class: "bi bi-plus-lg",
-                style: "margin-right: 6px; -webkit-text-stroke: 1px"
-            });
-
-            var $button = $("<button>")
-                .attr({
-                    class: "btn btn-info btn-sm device-insert-button",
-                    type: "button",
-                    title: "Add new Device"
-                })
-                .append($insertIcon)
-                .append("NEW")
-                .on("click", function () {
-                    grid.clearInsert();
-
-                    isInserting = true;
-                    grid.option("inserting", isInserting);
-                });
-
-            return $button;
-        },
+        name: "control", type: "bscontrol", width: 100, 
+        editButton: false, deleteButton: false, modeSwitchButton: true,
 
         // Button controls when displaying devices
         itemTemplate: function(value, item) {
@@ -264,7 +248,7 @@ function renderData() {
 
             var $customInsertButton = $("<button>")
                 .attr({
-                    class: "btn btn-outline-dark btn-xs",
+                    class: "btn btn-outline-primary btn-xs",
                     role: "button",
                     title: "Save device to list"
                 })
@@ -279,7 +263,7 @@ function renderData() {
                 .attr({
                     class: "btn btn-outline-secondary btn-xs",
                     role: "button",
-                    title: jsGrid.fields.control.prototype.cancelInsertButtonTooltip
+                    title: "Cancel insert"
                 })
                 .click(function(e) {
                     grid.clearInsert();
@@ -293,26 +277,125 @@ function renderData() {
             return $("<div>").attr({class: "btn-group"})
                 .append($customInsertButton)
                 .append($customCancelEditButton);
+        },
+
+        // Button controls for filtering items
+        filterTemplate: function () {
+            var grid = this._grid;
+            var $filterIcon = $("<i>").attr({
+                class: "bi bi-filter",
+                style: "position: relative; top: -3px; left: -6px;"
+            });
+            var $clearFilterIcon = $("<i>").attr({
+                class: "bi bi-x-lg",
+                style: "position: relative; top: -3px; left: -6px;"
+            });
+
+            var $customFilterButton = $("<button>")
+                .attr({
+                    class: "btn btn-outline-info btn-xs",
+                    role: "button",
+                    title: "Save device to list"
+                })
+                .click(function(e) {
+                    grid.loadData();
+                    e.stopPropagation();
+                })
+                .append($filterIcon);
+            var $customCancelFilterButton = $("<button>")
+                .attr({
+                    class: "btn btn-outline-secondary btn-xs",
+                    role: "button",
+                    title: "Cancel filter"
+                })
+                .click(function(e) {
+                    grid.clearFilter();
+
+                    isFiltering = false;
+                    grid.option("filtering", isFiltering);
+                    e.stopPropagation();
+                })
+                .append($clearFilterIcon);
+
+            return $("<div>").attr({class: "btn-group"})
+                .append($customFilterButton)
+                .append($customCancelFilterButton);
         }
     });
 
+    // Define jsGrid Configuration
     $("#GridDevices").jsGrid({
         height: "auto",
         width: gridWidth,
-        updateOnResize: true,
-        editing: true,
+
+        filtering: false,
         inserting: false,
+        editing: true,
+        selecting: true,
         sorting: false,
-        confirmDeleting: true,
-        deleteConfirm: "Are you sure you want to delete this device?",
-        data: appData.devices,
-        fields: gridFields,
+        paging: true,
+
         rowClick: function (args) {
             args.cancel = true;
+        },
+
+        noDataContent: "No devices found",
+
+        pageIndex: 1,
+        pageSize: 15,
+        pagerFormat: "Pages: {prev} {pages} {next}",
+
+        confirmDeleting: true,
+        deleteConfirm: "Are you sure you want to delete this device?",
+
+        data: appData.devices,
+        fields: gridFields,
+        controller: {
+            data: appData.devices,
+            loadData: function (filter) {
+                return $.grep(this.data, function (item) {
+                    // Check if all the fields are empty
+                    var all_empty = true;
+                    for (var field in filter) {
+                        if(filter[field]){
+                            all_empty = false;
+                        }
+                    }
+
+                    // If all the search fields are empty return all the rows
+                    if (all_empty) { return true; }
+
+                    // If some search field has content check if it matches the table entries
+                    for (var field in filter) {
+                        // Ignore the search in empty fields
+                        if (!filter[field]) {
+                            continue;
+                        }
+                        if (item[field].toUpperCase().indexOf(filter[field].toUpperCase()) >= 0) {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                });
+            },
+        },
+        updateOnResize: true,
+
+        onRefreshed: function () {
+            performBSPagerConversion();
         },
         onItemInserted: saveInsertedData,
         onItemDeleted: saveAppData,
         onItemUpdated: saveAppData
+    });
+
+    // External Grid Control
+    $("#device-insert-btn").on("click", function () {
+        $("#GridDevices").jsGrid("option", "inserting", true);
+    });
+    $("#device-filter-btn").on("click", function () {
+        $("#GridDevices").jsGrid("option", "filtering", true);
     });
 
 }
@@ -327,6 +410,7 @@ function saveAppData() {
         data: JSON.stringify(appData),
         success: function (data) {
             $.showSnackBar(data);
+            console.log(data)
         },
         error: function (data, err) {
             $.showSnackBar(data);
@@ -341,4 +425,71 @@ function saveInsertedData() {
     saveAppData();
     $(".device-insert-button").click();
 
+}
+
+
+
+// jQuery Functions used to manupulate the pager to Bootstrap
+function getTextNodesIn(node, includeWhitespaceNodes) {
+    var textNodes = [], whitespace = /^\s*$/;
+
+    function getTextNodes(node) {
+        if (node.nodeType == 3) {
+            if (includeWhitespaceNodes || !whitespace.test(node.nodeValue)) {
+                textNodes.push(node);
+            }
+        } else {
+            for (var i = 0, len = node.childNodes.length; i < len; ++i) {
+                getTextNodes(node.childNodes[i]);
+            }
+        }
+    }
+
+    getTextNodes(node);
+    return textNodes;
+}
+
+
+/* 
+This function converts the inbuilt pager into a comparable bootstrap
+object. This must be executed on each refresh of the page.
+*/
+function performBSPagerConversion() {
+
+    // Wrap the pagination elements in <ul> and <nav>
+    $(".jsgrid-pager").wrap("<ul class='pagination'>").contents().unwrap();
+    $(".pagination").wrap("<nav>");
+
+    // Convert child objects to link items
+    $(".pagination").children().each(function(i, v) {
+        $(v).wrap('<li class="page-item">')
+    });
+    $(".pagination a").addClass("page-link");
+
+    // Add state classes
+    $(".jsgrid-pager-nav-inactive-button")
+        .addClass("disabled")
+        .parent().addClass("disabled");
+    $(".page-item .jsgrid-pager-current-page")
+        .parent().addClass('active')
+        .contents().wrap("<a class='page-link'>");
+
+    // Wrap any unwrapped text as a span
+    var textNodeParent = ".pagination";
+    var textnodes = getTextNodesIn($(textNodeParent)[0]);
+    for (var i=0; i < textnodes.length; i++) {
+        if ($(textnodes[i]).parent().is(textNodeParent)) {
+            $(textnodes[i]).wrap("<span>");
+        }
+    }
+
+    // Move new spans to upstream parent
+    $(".pagination > span").each(function(i, v) {
+        var insertDest = ".jsgrid-pager-container nav"
+        if (i >= 1) {
+            $(v).detach().appendTo(insertDest);
+        } else {
+            $(v).detach().prependTo(insertDest);
+        }
+    });
 }
