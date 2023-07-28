@@ -7,6 +7,8 @@ html {
   --alert-success: 66, 174, 66;
   
   --alert-link: 71, 144, 230;
+
+  min-width: 440px;
 }
 
 
