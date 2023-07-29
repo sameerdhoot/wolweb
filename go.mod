@@ -10,6 +10,7 @@ require (
 
 require (
 	github.com/BurntSushi/toml v1.1.0 // indirect
+	github.com/NYTimes/gziphandler v1.1.1
 	github.com/felixge/httpsnoop v1.0.1 // indirect
 	github.com/joho/godotenv v1.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
