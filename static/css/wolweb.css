@@ -35,9 +35,6 @@ html[data-bs-theme="dark"] nav.navbar {
   font-weight: normal;
   color: rgb(var(--alert-link));
 }
-.alert:hover {
-  background-color: red;
-}
 .alert button.close {
   margin: 0.45rem 1rem;
   color: rgb(var(--active-alert-color));
