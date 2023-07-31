@@ -46,6 +46,7 @@ The application will use the following default values if they are not explicitly
 
 | Config | Description | Default
 | --- | --- | --- |
+| Host | Define the host address on which the webserver will listen | **0.0.0.0**
 | Port | Define the port on which the webserver will listen | **8089**
 | Virtual Directory | A virtual directory to mount this application under | **/wolweb**
 | Broadcast IP and Port | This is broadcast IP address and port for the local network. *Please include the port :9* | **192.168.1.255:9**
@@ -56,6 +57,7 @@ You can override the default application configuration by using a config file or
 
 ```json
 {
+    "host": "0.0.0.0",
     "port": 8089,
     "vdir":"/wolweb",
     "bcastip":"192.168.1.255:9"
@@ -67,6 +69,7 @@ You can override the default application configuration by using a config file or
 
 | Variable Name | Description
 | --- | --- |
+| WOLWEBHOST | Override for default HTTP host
 | WOLWEBPORT | Override for default HTTP port
 | WOLWEBVDIR | Override for default virtual directory
 | WOLWEBBCASTIP | Override for broadcast IP address and port
