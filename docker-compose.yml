@@ -18,6 +18,7 @@ services:
 
     # Use environment variable below to change port or virtual directory.
     environment:
+      WOLWEBHOST: "0.0.0.0"
       WOLWEBPORT: "8089"
       #WOLWEBVDIR: "/wolweb"
       WOLWEBBCASTIP: "192.168.1.255:9"

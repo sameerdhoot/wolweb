@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"net"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -21,11 +22,8 @@ var appData AppData
 func main() {
 
 	setWorkingDir()
-
 	loadConfig()
-
 	loadData()
-
 	setupWebServer()
 
 }
@@ -85,7 +83,7 @@ func setupWebServer() {
 	router.HandleFunc(basePath+"/health", checkHealth).Methods("GET")
 
 	// Setup Webserver
-	httpListen := ":" + strconv.Itoa(appConfig.Port)
+	httpListen := net.ParseIP(appConfig.Host).String() + ":" + strconv.Itoa(appConfig.Port)
 	log.Printf("Startup Webserver on \"%s\"", httpListen)
 
 	srv := &http.Server{
