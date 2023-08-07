@@ -1,24 +1,130 @@
-.fas {
-    margin-right: 10px;
+/* --------- Global Variables --------- */
+html {
+  --alert-help: 255, 171, 0;
+  --alert-warning: 255, 84, 0;
+  --alert-info: 53, 146, 255;
+  --alert-error: 211, 53, 52;
+  --alert-success: 66, 174, 66;
+  
+  --alert-link: 71, 144, 230;
+
+  min-width: 440px;
 }
 
-.jsgrid-button {
-    min-width: unset !important;
+
+/* --------- Adaptive Backgrounds --------- */
+html[data-bs-theme="light"] nav.navbar {
+    background-color: var(--bs-gray-900);
+  }
+html[data-bs-theme="dark"] nav.navbar {
+    background-color: rgb(var(--bs-emphasis-color-rgb), 10%);
 }
 
-.grid-button {
-    cursor: pointer;
-    font-size: 18px;
-    margin-right: 12px !important;
+
+/* --------- Alert Styles --------- */
+.alert {
+  position: relative;
+  padding: 0;
+  min-width: 250px;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: rgb(var(--active-alert-color), 19%);
+  border-color: rgb(var(--active-alert-color), 60%);
+}
+.alert .alert-link {
+  font-weight: normal;
+  color: rgb(var(--alert-link));
+}
+.alert button.close {
+  margin: 0.45rem 1rem;
+  color: rgb(var(--active-alert-color));
+  opacity: 0.75;
+}
+.alert button.close:hover { opacity: 1; }
+.alert ul { margin: 0; }
+.alert ul li { margin-bottom: 0.2rem; }
+.alert ul li:last-child { margin-bottom: 0; }
+
+.alert-icon, .alert-text {
+  display: table-cell;
+  vertical-align: middle;
 }
 
-.bs-grid-button {
-    font-size: 18px;
-    min-width: 22px;
+.alert-icon {
+  min-width: 40px;
+  text-align: center;
+  font-size: 1.5rem;
+  color: white;
+  background-color: rgb(var(--active-alert-color));
+  padding: 1rem;
 }
 
-.hideMe {
-    display: none;
+.alert-text {
+  color: var(--bs-body-color);
+  padding: 0.75rem;
+  width: 100%;
+}
+.alert-text h5 {
+  margin-top: 0;
+  font-weight: 600;
+  color: rgb(var(--active-alert-color));
+}
+
+
+/* --------- Alert Types --------- */
+.alert-error { --active-alert-color: var(--alert-error); }
+.alert-info { --active-alert-color: var(--alert-info); }
+.alert-help { --active-alert-color: var(--alert-help); }
+.alert-warning { --active-alert-color: var(--alert-warning); }
+.alert-success { --active-alert-color: var(--alert-success); }
+
+
+/* --------- Functional Classes --------- */
+.hideMe { display: none; }
+
+
+/* --------- WOLWEB Interface Elements --------- */
+@media (min-width:0px) {
+  .container, .container-lg, .container-md, .container-sm {
+      max-width: 960px;
+  }
+}
+
+
+.code-container {
+  padding: 8px 12px;
+  background: rgb(var(--bs-emphasis-color-rgb), 5%);
+  border-radius: 8px;
+  overflow: scroll;
+  margin-bottom: 12px;
+}
+
+.section-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 8px;
+}
+.section-header .table-controls { margin-left: auto; }
+.section-header h3 { margin: 0; }
+
+
+.api-method-pill {
+  background: var(--bs-primary);
+  border-radius: 80px;
+  padding: 0 15px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  width: -moz-fit-content;
+  width: fit-content;
+  justify-content: center;
+  color: white;
+}
+.api-method-pill p {
+  margin-bottom: 0;
+  font-size: smaller;
 }
 
 .jsgrid-table {

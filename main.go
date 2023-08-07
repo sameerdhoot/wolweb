@@ -2,12 +2,14 @@ package main
 
 import (
 	"log"
+	"net"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strconv"
 	"time"
 
+	"github.com/NYTimes/gziphandler"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/ilyakaznacheev/cleanenv"
@@ -20,11 +22,8 @@ var appData AppData
 func main() {
 
 	setWorkingDir()
-
 	loadConfig()
-
 	loadData()
-
 	setupWebServer()
 
 }
@@ -65,7 +64,7 @@ func setupWebServer() {
 	}
 
 	// map directory to server static files
-	router.PathPrefix(basePath + "/static/").Handler(http.StripPrefix(basePath+"/static/", http.FileServer(http.Dir("./static"))))
+	router.PathPrefix(basePath + "/static/").Handler(http.StripPrefix(basePath+"/static/", CacheControlWrapper(http.FileServer(http.Dir("./static")))))
 
 	// Define Home Route
 	router.HandleFunc(basePath+"/", renderHomePage).Methods("GET")
@@ -84,11 +83,11 @@ func setupWebServer() {
 	router.HandleFunc(basePath+"/health", checkHealth).Methods("GET")
 
 	// Setup Webserver
-	httpListen := ":" + strconv.Itoa(appConfig.Port)
+	httpListen := net.ParseIP(appConfig.Host).String() + ":" + strconv.Itoa(appConfig.Port)
 	log.Printf("Startup Webserver on \"%s\"", httpListen)
 
 	srv := &http.Server{
-		Handler: handlers.RecoveryHandler(handlers.PrintRecoveryStack(true))(router),
+		Handler: gziphandler.GzipHandler(handlers.RecoveryHandler(handlers.PrintRecoveryStack(true))(router)),
 		Addr:    httpListen,
 		// Good practice: enforce timeouts for servers you create!
 		WriteTimeout: 15 * time.Second,
@@ -97,4 +96,11 @@ func setupWebServer() {
 
 	log.Fatal(srv.ListenAndServe())
 
+}
+
+func CacheControlWrapper(h http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Cache-Control", "max-age=31536000")
+		h.ServeHTTP(w, r)
+	})
 }
