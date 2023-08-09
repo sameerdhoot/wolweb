@@ -15,21 +15,23 @@ import (
 	"github.com/ilyakaznacheev/cleanenv"
 )
 
+var Version = "dev"
+
 // Global variables
-var appConfig AppConfig
-var appData AppData
+var (
+	appConfig AppConfig
+	appData   AppData
+)
 
 func main() {
-
+	log.Printf("Starting WakeOnLan Webserver version %s", Version)
 	setWorkingDir()
 	loadConfig()
 	loadData()
 	setupWebServer()
-
 }
 
 func setWorkingDir() {
-
 	thisApp, err := os.Executable()
 	if err != nil {
 		log.Fatalf("Error determining the directory. \"%s\"", err)
@@ -37,21 +39,17 @@ func setWorkingDir() {
 	appPath := filepath.Dir(thisApp)
 	os.Chdir(appPath)
 	log.Printf("Set working directory: %s", appPath)
-
 }
 
 func loadConfig() {
-
 	err := cleanenv.ReadConfig("config.json", &appConfig)
 	if err != nil {
 		log.Fatalf("Error loading config.json file. \"%s\"", err)
 	}
 	log.Printf("Application configuratrion loaded from config.json")
-
 }
 
 func setupWebServer() {
-
 	// Init HTTP Router - mux
 	router := mux.NewRouter()
 
@@ -95,7 +93,6 @@ func setupWebServer() {
 	}
 
 	log.Fatal(srv.ListenAndServe())
-
 }
 
 func CacheControlWrapper(h http.Handler) http.Handler {
