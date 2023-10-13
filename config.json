@@ -2,5 +2,6 @@
     "host": "0.0.0.0",
     "port": 8089,
     "vdir": "/wolweb",
-    "bcastip": "192.168.1.255:9"
+    "bcastip": "192.168.1.255:9",
+    "read_only": false
 }

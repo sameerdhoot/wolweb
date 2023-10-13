@@ -1,27 +1,33 @@
 package main
 
 import (
+	_ "embed"
 	"html/template"
 	"io"
 	"log"
 	"net/http"
 )
 
+//go:embed index.html
+var indexHtml string
+
 func renderHomePage(w http.ResponseWriter, r *http.Request) {
 
 	pageData := struct {
-		Devices []Device
-		VDir    string
-		BCastIP string
+		Devices  []Device
+		VDir     string
+		BCastIP  string
+		ReadOnly bool
 	}{
-		Devices: appData.Devices,
-		VDir:    appConfig.VDir,
-		BCastIP: appConfig.BCastIP,
+		Devices:  appData.Devices,
+		VDir:     appConfig.VDir,
+		BCastIP:  appConfig.BCastIP,
+		ReadOnly: appConfig.ReadOnly,
 	}
 	if appConfig.VDir == "/" {
 		pageData.VDir = ""
 	}
-	tmpl, _ := template.ParseFiles("index.html")
+	tmpl, _ := template.New("index.html").Parse(indexHtml)
 	tmpl.Execute(w, pageData)
 	log.Println("Renedered the home page.")
 
