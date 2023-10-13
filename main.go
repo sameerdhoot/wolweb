@@ -83,8 +83,10 @@ func setupWebServer() {
 	router.HandleFunc(basePath+"/wake/{deviceName}", wakeUpWithDeviceName).Methods("GET")
 	router.HandleFunc(basePath+"/wake/{deviceName}/", wakeUpWithDeviceName).Methods("GET")
 
-	// Define Data save Api function
-	router.HandleFunc(basePath+"/data/save", saveData).Methods("POST")
+	if appConfig.ReadOnly == false {
+		// Define Data save Api function
+		router.HandleFunc(basePath+"/data/save", saveData).Methods("POST")
+	}
 
 	// Define Data get Api function
 	router.HandleFunc(basePath+"/data/get", getData).Methods("GET")
