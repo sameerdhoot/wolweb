@@ -1,11 +1,15 @@
 package main
 
 import (
+	_ "embed"
 	"html/template"
 	"io"
 	"log"
 	"net/http"
 )
+
+//go:embed index.html
+var indexHtml string
 
 func renderHomePage(w http.ResponseWriter, r *http.Request) {
 
@@ -21,7 +25,7 @@ func renderHomePage(w http.ResponseWriter, r *http.Request) {
 	if appConfig.VDir == "/" {
 		pageData.VDir = ""
 	}
-	tmpl, _ := template.ParseFiles("index.html")
+	tmpl, _ := template.New("index.html").Parse(indexHtml)
 	tmpl.Execute(w, pageData)
 	log.Println("Renedered the home page.")
 
