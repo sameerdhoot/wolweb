@@ -30,9 +30,11 @@ RUN apk add --no-cache curl
 
 ARG WOLWEBPORT=8089
 ENV WOLWEBPORT=${WOLWEBPORT}
+ARG WOLWEBVDIR = /wolweb
+ENV WOLWEBVDIR=${WOLWEBVDIR}
 
 CMD ["/wolweb/wolweb"]
 
 EXPOSE ${WOLWEBPORT}
 HEALTHCHECK --interval=5s --timeout=3s \
-    CMD curl --silent --show-error --fail http://localhost:${WOLWEBPORT}/wolweb/health || exit 1
+    CMD curl --silent --show-error --fail http://localhost:${WOLWEBPORT}${WOLWEBVDIR}/health || exit 1
