@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"net"
 	"net/http"
@@ -18,9 +19,15 @@ import (
 // Global variables
 var appConfig AppConfig
 var appData AppData
+var args Args
+
+type Args struct {
+	ConfigPath string
+	DevicesPath string
+}
 
 func main() {
-
+	processArgs()
 	setWorkingDir()
 	loadConfig()
 	loadData()
@@ -42,7 +49,7 @@ func setWorkingDir() {
 
 func loadConfig() {
 
-	err := cleanenv.ReadConfig("config.json", &appConfig)
+	err := cleanenv.ReadConfig(args.ConfigPath, &appConfig)
 	if err != nil {
 		log.Fatalf("Error loading config.json file. \"%s\"", err)
 	}
@@ -103,4 +110,29 @@ func CacheControlWrapper(h http.Handler) http.Handler {
 		w.Header().Set("Cache-Control", "max-age=31536000")
 		h.ServeHTTP(w, r)
 	})
+}
+
+func processArgs() {
+	var configPath string
+	var devicesPath string
+
+	f := flag.NewFlagSet("wolweb", 1)
+
+	f.StringVar(&configPath, "c", "config.json", "Path to configuration file")
+	f.StringVar(&devicesPath, "d", "devices.json", "Path to devices file")
+
+	f.Parse(os.Args[1:])
+
+	configPath, err := filepath.Abs(configPath)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	devicesPath, err = filepath.Abs(devicesPath)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	args.ConfigPath = configPath
+	args.DevicesPath = devicesPath
 }

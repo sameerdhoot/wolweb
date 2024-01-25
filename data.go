@@ -11,7 +11,7 @@ import (
 func loadData() {
 	// Read data from 'devices.json' file
 
-	devicesFile, fileErr := os.Open("devices.json")
+	devicesFile, fileErr := os.Open(args.DevicesPath)
 	if fileErr != nil {
 		log.Fatalf("Error loading devices.json file. \"%s\"", fileErr)
 	}
