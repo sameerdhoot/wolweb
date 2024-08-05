@@ -59,7 +59,10 @@
         <div class="section-header">
             <h3>Wake-up directly using HTTP Requests</h3>
         </div>
-        <h6 style="margin-top: -4px;">/wolweb/wake/<span class="text-secondary">&lt;Device Name&gt;</span>&nbsp;- Returns a JSON object</h6>
+        <h6 style="margin-top: -4px; display: flex;">
+            <span id="app-vdir"></span>
+            <span class="text-secondary">&lt;Device Name&gt;</span>&nbsp;- Returns a JSON object
+        </h6>
         <div class="code-container ">
             <pre>
                 <code id="code-element" class="language-json"></code>
@@ -122,6 +125,8 @@
         $( "#code-element" ).load( "static/api-sample.txt" , function() {
             hljs.highlightAll();
         });
+
+        document.getElementById("app-vdir").innerHTML = window.vDir + "/wake/"
     </script>
 </body>
 </html>
