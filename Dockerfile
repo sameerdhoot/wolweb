@@ -29,7 +29,9 @@ COPY --from=builder /wolweb/static ./static
 RUN apk add --no-cache curl
 
 ARG WOLWEBPORT=8089
+ARG WOLWEBVDIR=/wolweb
 ENV WOLWEBPORT=${WOLWEBPORT}
+ENV WOLWEBVDIR=${WOLWEBVDIR}
 
 CMD ["/wolweb/wolweb"]
 
