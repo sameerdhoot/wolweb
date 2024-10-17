@@ -30,10 +30,12 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
  && rm -rf /var/lib/apt/lists/*
 
 ARG WOLWEBPORT=8089
+ARG WOLWEBVDIR=/wolweb
 ENV WOLWEBPORT=${WOLWEBPORT}
+ENV WOLWEBVDIR=${WOLWEBVDIR}
 
 CMD ["/wolweb/wolweb"]
 
 EXPOSE ${WOLWEBPORT}
 HEALTHCHECK --interval=5s --timeout=3s \
-  CMD curl --silent --show-error --fail http://localhost:${WOLWEBPORT}/wolweb/health || exit 1
+  CMD curl --silent --show-error --fail http://localhost:${WOLWEBPORT}/${WOLWEBVDIR}/health || exit 1
