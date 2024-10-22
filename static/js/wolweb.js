@@ -119,6 +119,20 @@ function renderData() {
         // editing: false
     });
 
+    // Interface Name Column
+    gridFields.push({
+        name: "interface", title: "Interface",
+        type: "text",
+        width: null,
+        insertTemplate: function () {
+            var $result = jsGrid.fields.text.prototype.insertTemplate.call(this); // original input
+            // $result.attr("disabled", true).css("background", "lightgray").val(bCastIP);
+            $result.val("");
+            return $result;
+        },
+        // editing: false
+    });
+
     // Wake-up Action Column
     gridFields.push({
         name: "command", title: "Action",
