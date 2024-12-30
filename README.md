@@ -106,7 +106,7 @@ This project includes [Dockerfile (based on Alpine)](./Dockerfile) and [docker-c
 
 ### With docker-compose
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 ### Build and run manually
