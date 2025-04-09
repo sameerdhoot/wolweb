@@ -1,12 +1,14 @@
-$(document).ready(function () {
+var readOnly = false;
 
+$(document).ready(function () {
+    readOnly = (document.querySelector("body").dataset.readOnly == "true");
     jQuery.showSnackBar = function (data) {
 
         // Reset the alert box to default classes
         $('#snackbar').removeClass()
         $('#snackbar > .alert-icon > i').removeClass();
         $('#snackbar').addClass('alert hideMe')
-        
+
         // Set alert message
         $('#snackbar > .alert-text > p').text(data.message);
 
@@ -19,13 +21,13 @@ $(document).ready(function () {
             $('#snackbar').addClass('alert-success');
             $('#snackbar > .alert-text > h5').text('Success');
             $('#snackbar > .alert-icon > i').addClass('bi-check-circle-fill')
-            
+
             // After 2 seconds, hide the Div Again
             setTimeout(function () {
                 $('#snackbar').hide();
             }, 2000);
         }
-        
+
         $('#snackbar').show();
     };
 
@@ -135,7 +137,7 @@ function renderData() {
                 .attr({
                     class: "btn btn-primary btn-sm",
                     type: "button",
-                    title: "Send magic packet" 
+                    title: "Send magic packet"
                 })
                 .append($wakeUpIcon)
                 .append("WAKE-UP")
@@ -150,11 +152,11 @@ function renderData() {
 
     // Modify Data Column
     gridFields.push({
-        name: "control", type: "bscontrol", width: 100, 
+        name: "control", type: "bscontrol", width: 100,
         editButton: false, deleteButton: false, modeSwitchButton: true,
 
         // Button controls when displaying devices
-        itemTemplate: function(value, item) {
+        itemTemplate: function (value, item) {
             var grid = this._grid;
             var $editIcon = $("<i>").attr({
                 class: "bi bi-pencil-square",
@@ -167,28 +169,42 @@ function renderData() {
 
             var $customEditButton = $("<button>")
                 .attr({
-                    class: "btn btn-outline-warning btn-xs",
+                    class: "btn btn-outline-secondary btn-xs",
                     role: "button",
-                    title: jsGrid.fields.control.prototype.editButtonTooltip
-                })
-                .click(function(e) {
-                    grid.editItem(item);
-                    e.stopPropagation();
+                    title: jsGrid.fields.control.prototype.editButtonTooltip,
+                    disabled: true
                 })
                 .append($editIcon);
             var $customDeleteButton = $("<button>")
                 .attr({
-                    class: "btn btn-outline-danger btn-xs",
+                    class: "btn btn-outline-secondary btn-xs",
                     role: "button",
-                    title: jsGrid.fields.control.prototype.deleteButtonTooltip
-                })
-                .click(function(e) {
-                    grid.deleteItem(item);
-                    e.stopPropagation();
+                    title: jsGrid.fields.control.prototype.deleteButtonTooltip,
+                    disabled: true
                 })
                 .append($deleteIcon);
-    
-            return $("<div>").attr({class: "btn-group"})
+
+                if (!readOnly) {
+                    $customEditButton.attr({
+                        class: "btn btn-outline-warning btn-xs",
+                        disabled: false
+                    })
+                    $customEditButton.click(function (e) {
+                        grid.editItem(item);
+                        e.stopPropagation();
+                    })
+                    $customDeleteButton.attr({
+                        class: "btn btn-outline-danger btn-xs",
+                        disabled: false
+                    })
+                    $customDeleteButton.click(function (e) {
+                        grid.deleteItem(item);
+                        e.stopPropagation();
+                    })
+
+                }
+
+            return $("<div>").attr({ class: "btn-group" })
                 .append($customEditButton)
                 .append($customDeleteButton);
         },
@@ -211,7 +227,7 @@ function renderData() {
                     role: "button",
                     title: jsGrid.fields.control.prototype.updateButtonTooltip
                 })
-                .click(function(e) {
+                .click(function (e) {
                     grid.updateItem();
                     e.stopPropagation();
                 })
@@ -222,13 +238,13 @@ function renderData() {
                     role: "button",
                     title: jsGrid.fields.control.prototype.cancelEditButtonTooltip
                 })
-                .click(function(e) {
+                .click(function (e) {
                     grid.cancelEdit();
                     e.stopPropagation();
                 })
                 .append($cancelEditIcon);
-    
-            return $("<div>").attr({class: "btn-group"})
+
+            return $("<div>").attr({ class: "btn-group" })
                 .append($customUpdateButton)
                 .append($customCancelEditButton);
         },
@@ -252,7 +268,7 @@ function renderData() {
                     role: "button",
                     title: "Save device to list"
                 })
-                .click(function(e) {
+                .click(function (e) {
                     grid.insertItem().done(function () {
                         grid.clearInsert();
                     });
@@ -265,16 +281,16 @@ function renderData() {
                     role: "button",
                     title: "Cancel insert"
                 })
-                .click(function(e) {
+                .click(function (e) {
                     grid.clearInsert();
-                    
+
                     isInserting = false;
                     grid.option("inserting", isInserting);
                     e.stopPropagation();
                 })
                 .append($clearInsertIcon);
-    
-            return $("<div>").attr({class: "btn-group"})
+
+            return $("<div>").attr({ class: "btn-group" })
                 .append($customInsertButton)
                 .append($customCancelEditButton);
         },
@@ -297,7 +313,7 @@ function renderData() {
                     role: "button",
                     title: "Save device to list"
                 })
-                .click(function(e) {
+                .click(function (e) {
                     grid.loadData();
                     e.stopPropagation();
                 })
@@ -308,7 +324,7 @@ function renderData() {
                     role: "button",
                     title: "Cancel filter"
                 })
-                .click(function(e) {
+                .click(function (e) {
                     grid.clearFilter();
 
                     isFiltering = false;
@@ -317,7 +333,7 @@ function renderData() {
                 })
                 .append($clearFilterIcon);
 
-            return $("<div>").attr({class: "btn-group"})
+            return $("<div>").attr({ class: "btn-group" })
                 .append($customFilterButton)
                 .append($customCancelFilterButton);
         }
@@ -357,7 +373,7 @@ function renderData() {
                     // Check if all the fields are empty
                     var all_empty = true;
                     for (var field in filter) {
-                        if(filter[field]){
+                        if (filter[field]) {
                             all_empty = false;
                         }
                     }
@@ -450,7 +466,7 @@ function getTextNodesIn(node, includeWhitespaceNodes) {
 }
 
 
-/* 
+/*
 This function converts the inbuilt pager into a comparable bootstrap
 object. This must be executed on each refresh of the page.
 */
@@ -461,7 +477,7 @@ function performBSPagerConversion() {
     $(".pagination").wrap("<nav>");
 
     // Convert child objects to link items
-    $(".pagination").children().each(function(i, v) {
+    $(".pagination").children().each(function (i, v) {
         $(v).wrap('<li class="page-item">')
     });
     $(".pagination a").addClass("page-link");
@@ -477,14 +493,14 @@ function performBSPagerConversion() {
     // Wrap any unwrapped text as a span
     var textNodeParent = ".pagination";
     var textnodes = getTextNodesIn($(textNodeParent)[0]);
-    for (var i=0; i < textnodes.length; i++) {
+    for (var i = 0; i < textnodes.length; i++) {
         if ($(textnodes[i]).parent().is(textNodeParent)) {
             $(textnodes[i]).wrap("<span>");
         }
     }
 
     // Move new spans to upstream parent
-    $(".pagination > span").each(function(i, v) {
+    $(".pagination > span").each(function (i, v) {
         var insertDest = ".jsgrid-pager-container nav"
         if (i >= 1) {
             $(v).detach().appendTo(insertDest);

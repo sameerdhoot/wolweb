@@ -26,7 +26,7 @@ On some devices WOL can be difficult to correctly configure and have work reliab
 
 ![Screenshot](wolweb_ui.png)
 
-The UI features CRUD operation implemented using [js-grid.com](https://github.com/tabalinas/jsgrid) plugin. 
+The UI features CRUD operation implemented using [js-grid.com](https://github.com/tabalinas/jsgrid) plugin.
 
 ### Wake-up directly using HTTP Request
 
@@ -50,6 +50,7 @@ The application will use the following default values if they are not explicitly
 | Port | Define the port on which the webserver will listen | **8089**
 | Virtual Directory | A virtual directory to mount this application under | **/wolweb**
 | Broadcast IP and Port | This is broadcast IP address and port for the local network. *Please include the port :9* | **192.168.1.255:9**
+| Read Only | If set to true, the UI will be read only | **false**
 
 You can override the default application configuration by using a config file or by setting environment variables. The application will first load values from config file and look for environment variables and overwrites values from the file with the values which were found in the environment.
 
@@ -60,7 +61,8 @@ You can override the default application configuration by using a config file or
     "host": "0.0.0.0",
     "port": 8089,
     "vdir":"/wolweb",
-    "bcastip":"192.168.1.255:9"
+    "bcastip":"192.168.1.255:9",
+    "read_only":false
 }
 ```
 **Using Environment Variables:**
@@ -73,6 +75,7 @@ You can override the default application configuration by using a config file or
 | WOLWEBPORT | Override for default HTTP port
 | WOLWEBVDIR | Override for default virtual directory
 | WOLWEBBCASTIP | Override for broadcast IP address and port
+| WOLWEBREADONLY | Override for read only mode of UI
 
 ## Devices (targets) - devices.json format
 ```json
@@ -121,7 +124,7 @@ docker cp wolweb:/wolweb - > wolweb.gz
 ```
 
 
-## Build 
+## Build
 You need Go 1.20 to build binary for any OS.
 
 ```powershell

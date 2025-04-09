@@ -19,7 +19,7 @@
     <link rel="preload" href="static/css/highlight@11.7.0.custom.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
 </head>
 
-<body>
+<body data-read-only="{{ .ReadOnly }}">
     <nav class="navbar navbar-dark navbar-expand-md py-3">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center">
@@ -35,9 +35,11 @@
             <h3>Devices</h3>
             <div class="table-controls">
                 <div class="btn-group">
+                    {{ if not .ReadOnly }}
                     <button id="device-insert-btn" class="btn btn-sm btn-outline-success" type="button" title="Add new device">
                         <i class="bi bi-plus-lg" style="margin-right: 6px;"></i>NEW
                     </button>
+                    {{ end }}
                     <button id="device-filter-btn" class="btn btn-sm btn-outline-secondary" type="button" title="Filter devices">
                         <i class="bi bi-filter" style="margin-right: 6px;"></i>FILTER
                     </button>
@@ -52,7 +54,7 @@
                 <h5>Title here</h5>
                 <p style="margin: 0; font-size: calc(var(--bs-body-font-size) - 1pt);">Message here</p>
             </div>
-            
+
         </div>
         <div id="GridDevices"></div>
         <hr>
@@ -121,7 +123,7 @@
     <script>
         window.vDir = "{{$.VDir}}"
         window.bCastIP = "{{$.BCastIP}}"
-        
+
         $( "#code-element" ).load( "static/api-sample.txt" , function() {
             hljs.highlightAll();
         });
