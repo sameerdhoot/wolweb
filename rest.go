@@ -34,7 +34,7 @@ func wakeUpWithDeviceName(w http.ResponseWriter, r *http.Request) {
 			if c.Name == deviceName {
 
 				// We found the Devicename
-				if err := SendMagicPacket(c.Mac, c.BroadcastIP, ""); err != nil {
+				if err := SendMagicPacket(c.Mac, c.BroadcastIP, c.Interface); err != nil {
 					// We got an internal Error on SendMagicPacket
 					w.WriteHeader(http.StatusInternalServerError)
 					result.Success = false
@@ -43,7 +43,7 @@ func wakeUpWithDeviceName(w http.ResponseWriter, r *http.Request) {
 				} else {
 					// Horray we send the WOL Packet succesfully
 					result.Success = true
-					result.Message = fmt.Sprintf("Sent magic packet to device '%s' with MAC '%s' on Broadcast IP '%s'.", c.Name, c.Mac, c.BroadcastIP)
+					result.Message = fmt.Sprintf("Sent magic packet to device '%s' with MAC '%s' on Broadcast IP '%s' with interface '%s'.", c.Name, c.Mac, c.BroadcastIP, c.Interface)
 					result.ErrorObject = nil
 				}
 			}
