@@ -1,32 +1,23 @@
 $(document).ready(function () {
-
-    jQuery.showSnackBar = function (data) {
-
-        // Reset the alert box to default classes
-        $('#snackbar').removeClass()
-        $('#snackbar > .alert-icon > i').removeClass();
-        $('#snackbar').addClass('alert hideMe')
-        
-        // Set alert message
-        $('#snackbar > .alert-text > p').text(data.message);
+    jQuery.showToast = function (data) {
+        var timeout = 3000
 
         // Check if provided data contains errors
         if (!data.success || data.error != null) {
-            $('#snackbar').addClass('alert-error');
-            $('#snackbar > .alert-icon > i').addClass('bi-exclamation-triangle-fill');
-            $('#snackbar > .alert-text > h5').text("Error");
+            Toast.create({
+                title: "Error",
+                message: data.message || "Something went wrong",
+                status: TOAST_STATUS.DANGER,
+                timeout: timeout
+            });
         } else {
-            $('#snackbar').addClass('alert-success');
-            $('#snackbar > .alert-text > h5').text('Success');
-            $('#snackbar > .alert-icon > i').addClass('bi-check-circle-fill')
-            
-            // After 2 seconds, hide the Div Again
-            setTimeout(function () {
-                $('#snackbar').hide();
-            }, 2000);
+            Toast.create({
+                title: "Success",
+                message: data.message,
+                status: TOAST_STATUS.SUCCESS,
+                timeout: timeout
+            });
         }
-        
-        $('#snackbar').show();
     };
 
     jQuery.wakeUpDeviceByName = function (deviceName) {
@@ -36,21 +27,19 @@ $(document).ready(function () {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
-                $.showSnackBar(data.responseJSON ?? data);
+                $.showToast(data.responseJSON ?? data);
             },
             error: function (data, err) {
-                $.showSnackBar(data.responseJSON ?? data);
+                $.showToast(data.responseJSON ?? data);
                 console.error(data);
             }
         })
     };
 
     getAppData();
-
 });
 
 function getAppData() {
-
     $.getJSON((vDir == "/" ? "" : vDir) + "/data/get", function (data) {
         window.appData = data;
         if (!appData.devices) {
@@ -60,14 +49,13 @@ function getAppData() {
     }).fail(function (data) {
         data.error = true;
         data.message = "Unable to retrieve device data!";
-        $.showSnackBar(data);
+        $.showToast(data);
         console.error(data);
     });
 
 }
 
 function renderData() {
-
     var BSControl = function (config) {
         jsGrid.ControlField.call(this, config);
     };
@@ -397,11 +385,9 @@ function renderData() {
     $("#device-filter-btn").on("click", function () {
         $("#GridDevices").jsGrid("option", "filtering", true);
     });
-
 }
 
 function saveAppData() {
-
     $.ajax({
         type: "POST",
         url: (vDir == "/" ? "" : vDir) + "/data/save",
@@ -409,24 +395,20 @@ function saveAppData() {
         dataType: "json",
         data: JSON.stringify(appData),
         success: function (data) {
-            $.showSnackBar(data);
+            $.showToast(data);
             console.log(data)
         },
         error: function (data, err) {
-            $.showSnackBar(data);
+            $.showToast(data);
             console.error(data);
         }
     });
-
 }
 
 function saveInsertedData() {
-
     saveAppData();
     $(".device-insert-button").click();
-
 }
-
 
 
 // jQuery Functions used to manupulate the pager to Bootstrap
@@ -455,7 +437,6 @@ This function converts the inbuilt pager into a comparable bootstrap
 object. This must be executed on each refresh of the page.
 */
 function performBSPagerConversion() {
-
     // Wrap the pagination elements in <ul> and <nav>
     $(".jsgrid-pager").wrap("<ul class='pagination'>").contents().unwrap();
     $(".pagination").wrap("<nav>");
