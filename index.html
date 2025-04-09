@@ -13,6 +13,7 @@
     <link type="text/css" rel="stylesheet" href="static/bootstrap/css/bootstrap@5.3.0.min.css">
     <link type="text/css" rel="stylesheet" href="static/css/jsgrid@1.5.3.min.css" />
     <link type="text/css" rel="stylesheet" href="static/css/wolweb.css" />
+    <link type="text/css" rel="stylesheet" href="static/css/bootstrap-toaster@5.1.0.min.css"/>
     <link rel="preload" href="static/bootstrap/css/bootstrap-icons@1.10.5.custom.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="preload" href="static/css/jsgrid-theme-custom.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="preload" href="static/css/Navbar-Right-Links-Dark-icons.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
@@ -45,16 +46,6 @@
                     </button>
                 </div>
             </div>
-        </div>
-        <div id="snackbar" class="alert hideMe">
-            <div class="alert-icon">
-                <i class="bi"></i>
-            </div>
-            <div class="alert-text">
-                <h5>Title here</h5>
-                <p style="margin: 0; font-size: calc(var(--bs-body-font-size) - 1pt);">Message here</p>
-            </div>
-
         </div>
         <div id="GridDevices"></div>
         <hr>
@@ -120,6 +111,7 @@
     <script type="text/javascript" src="static/bootstrap/js/bootstrap@5.2.3.min.js"></script>
     <script type="text/javascript" src="static/bootstrap/js/bootstrap-auto-dark-mode.js"></script>
     <script type="text/javascript" src="static/js/highlight@11.7.0.js"></script>
+    <script type="text/javascript" src="static/js/bootstrap-toaster@5.1.0.min.js"></script>
     <script>
         window.vDir = "{{$.VDir}}"
         window.bCastIP = "{{$.BCastIP}}"
@@ -129,6 +121,11 @@
         });
 
         document.getElementById("app-vdir").innerHTML = window.vDir + "/wake/"
+
+        Toast.setMaxCount(3);
+        Toast.enableQueue(true);
+        Toast.setPlacement(TOAST_PLACEMENT.BOTTOM_RIGHT);
+        Toast.enableTimers(TOAST_TIMERS.DISABLED);
     </script>
 </body>
 </html>
