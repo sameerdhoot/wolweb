@@ -151,181 +151,193 @@ function renderData() {
     });
 
     // Modify Data Column
-    if (!readOnly) {
-        gridFields.push({
-            name: "control", type: "bscontrol", width: 100,
-            editButton: false, deleteButton: false, modeSwitchButton: true,
+    gridFields.push({
+        name: "control", type: "bscontrol", width: 100,
+        editButton: false, deleteButton: false, modeSwitchButton: true,
 
-            // Button controls when displaying devices
-            itemTemplate: function (value, item) {
-                var grid = this._grid;
-                var $editIcon = $("<i>").attr({
-                    class: "bi bi-pencil-square",
-                    style: "position: relative; top: -3px; left: -6px;"
-                });
-                var $deleteIcon = $("<i>").attr({
-                    class: "bi bi-trash-fill",
-                    style: "position: relative; top: -3px; left: -6px;"
-                });
+        // Button controls when displaying devices
+        itemTemplate: function (value, item) {
+            var grid = this._grid;
+            var $editIcon = $("<i>").attr({
+                class: "bi bi-pencil-square",
+                style: "position: relative; top: -3px; left: -6px;"
+            });
+            var $deleteIcon = $("<i>").attr({
+                class: "bi bi-trash-fill",
+                style: "position: relative; top: -3px; left: -6px;"
+            });
 
-                var $customEditButton = $("<button>")
-                    .attr({
+            var $customEditButton = $("<button>")
+                .attr({
+                    class: "btn btn-outline-secondary btn-xs",
+                    role: "button",
+                    title: jsGrid.fields.control.prototype.editButtonTooltip,
+                    disabled: true
+                })
+                .append($editIcon);
+            var $customDeleteButton = $("<button>")
+                .attr({
+                    class: "btn btn-outline-secondary btn-xs",
+                    role: "button",
+                    title: jsGrid.fields.control.prototype.deleteButtonTooltip,
+                    disabled: true
+                })
+                .append($deleteIcon);
+
+                if (!readOnly) {
+                    $customEditButton.attr({
                         class: "btn btn-outline-warning btn-xs",
-                        role: "button",
-                        title: jsGrid.fields.control.prototype.editButtonTooltip
+                        disabled: false
                     })
-                    .click(function (e) {
+                    $customEditButton.click(function (e) {
                         grid.editItem(item);
                         e.stopPropagation();
                     })
-                    .append($editIcon);
-                var $customDeleteButton = $("<button>")
-                    .attr({
+                    $customDeleteButton.attr({
                         class: "btn btn-outline-danger btn-xs",
-                        role: "button",
-                        title: jsGrid.fields.control.prototype.deleteButtonTooltip
+                        disabled: false
                     })
-                    .click(function (e) {
+                    $customDeleteButton.click(function (e) {
                         grid.deleteItem(item);
                         e.stopPropagation();
                     })
-                    .append($deleteIcon);
 
-                return $("<div>").attr({ class: "btn-group" })
-                    .append($customEditButton)
-                    .append($customDeleteButton);
-            },
+                }
 
-            // Button controls when editing existing devices
-            editTemplate: function () {
-                var grid = this._grid;
-                var $updateIcon = $("<i>").attr({
-                    class: "bi bi-check-lg",
-                    style: "position: relative; top: -3px; left: -6px;"
-                });
-                var $cancelEditIcon = $("<i>").attr({
-                    class: "bi bi-x-lg",
-                    style: "position: relative; top: -3px; left: -6px;"
-                });
+            return $("<div>").attr({ class: "btn-group" })
+                .append($customEditButton)
+                .append($customDeleteButton);
+        },
 
-                var $customUpdateButton = $("<button>")
-                    .attr({
-                        class: "btn btn-outline-success btn-xs",
-                        role: "button",
-                        title: jsGrid.fields.control.prototype.updateButtonTooltip
-                    })
-                    .click(function (e) {
-                        grid.updateItem();
-                        e.stopPropagation();
-                    })
-                    .append($updateIcon);
-                var $customCancelEditButton = $("<button>")
-                    .attr({
-                        class: "btn btn-outline-secondary btn-xs",
-                        role: "button",
-                        title: jsGrid.fields.control.prototype.cancelEditButtonTooltip
-                    })
-                    .click(function (e) {
-                        grid.cancelEdit();
-                        e.stopPropagation();
-                    })
-                    .append($cancelEditIcon);
+        // Button controls when editing existing devices
+        editTemplate: function () {
+            var grid = this._grid;
+            var $updateIcon = $("<i>").attr({
+                class: "bi bi-check-lg",
+                style: "position: relative; top: -3px; left: -6px;"
+            });
+            var $cancelEditIcon = $("<i>").attr({
+                class: "bi bi-x-lg",
+                style: "position: relative; top: -3px; left: -6px;"
+            });
 
-                return $("<div>").attr({ class: "btn-group" })
-                    .append($customUpdateButton)
-                    .append($customCancelEditButton);
-            },
+            var $customUpdateButton = $("<button>")
+                .attr({
+                    class: "btn btn-outline-success btn-xs",
+                    role: "button",
+                    title: jsGrid.fields.control.prototype.updateButtonTooltip
+                })
+                .click(function (e) {
+                    grid.updateItem();
+                    e.stopPropagation();
+                })
+                .append($updateIcon);
+            var $customCancelEditButton = $("<button>")
+                .attr({
+                    class: "btn btn-outline-secondary btn-xs",
+                    role: "button",
+                    title: jsGrid.fields.control.prototype.cancelEditButtonTooltip
+                })
+                .click(function (e) {
+                    grid.cancelEdit();
+                    e.stopPropagation();
+                })
+                .append($cancelEditIcon);
 
-            // Button controls for inserting new items
-            insertTemplate: function () {
-                var grid = this._grid;
-                var isInserting = grid.inserting;
-                var $saveIcon = $("<i>").attr({
-                    class: "bi bi-save",
-                    style: "position: relative; top: -3px; left: -6px;"
-                });
-                var $clearInsertIcon = $("<i>").attr({
-                    class: "bi bi-x-lg",
-                    style: "position: relative; top: -3px; left: -6px;"
-                });
+            return $("<div>").attr({ class: "btn-group" })
+                .append($customUpdateButton)
+                .append($customCancelEditButton);
+        },
 
-                var $customInsertButton = $("<button>")
-                    .attr({
-                        class: "btn btn-outline-primary btn-xs",
-                        role: "button",
-                        title: "Save device to list"
-                    })
-                    .click(function (e) {
-                        grid.insertItem().done(function () {
-                            grid.clearInsert();
-                        });
-                        e.stopPropagation();
-                    })
-                    .append($saveIcon);
-                var $customCancelEditButton = $("<button>")
-                    .attr({
-                        class: "btn btn-outline-secondary btn-xs",
-                        role: "button",
-                        title: "Cancel insert"
-                    })
-                    .click(function (e) {
+        // Button controls for inserting new items
+        insertTemplate: function () {
+            var grid = this._grid;
+            var isInserting = grid.inserting;
+            var $saveIcon = $("<i>").attr({
+                class: "bi bi-save",
+                style: "position: relative; top: -3px; left: -6px;"
+            });
+            var $clearInsertIcon = $("<i>").attr({
+                class: "bi bi-x-lg",
+                style: "position: relative; top: -3px; left: -6px;"
+            });
+
+            var $customInsertButton = $("<button>")
+                .attr({
+                    class: "btn btn-outline-primary btn-xs",
+                    role: "button",
+                    title: "Save device to list"
+                })
+                .click(function (e) {
+                    grid.insertItem().done(function () {
                         grid.clearInsert();
+                    });
+                    e.stopPropagation();
+                })
+                .append($saveIcon);
+            var $customCancelEditButton = $("<button>")
+                .attr({
+                    class: "btn btn-outline-secondary btn-xs",
+                    role: "button",
+                    title: "Cancel insert"
+                })
+                .click(function (e) {
+                    grid.clearInsert();
 
-                        isInserting = false;
-                        grid.option("inserting", isInserting);
-                        e.stopPropagation();
-                    })
-                    .append($clearInsertIcon);
+                    isInserting = false;
+                    grid.option("inserting", isInserting);
+                    e.stopPropagation();
+                })
+                .append($clearInsertIcon);
 
-                return $("<div>").attr({ class: "btn-group" })
-                    .append($customInsertButton)
-                    .append($customCancelEditButton);
-            },
+            return $("<div>").attr({ class: "btn-group" })
+                .append($customInsertButton)
+                .append($customCancelEditButton);
+        },
 
-            // Button controls for filtering items
-            filterTemplate: function () {
-                var grid = this._grid;
-                var $filterIcon = $("<i>").attr({
-                    class: "bi bi-filter",
-                    style: "position: relative; top: -3px; left: -6px;"
-                });
-                var $clearFilterIcon = $("<i>").attr({
-                    class: "bi bi-x-lg",
-                    style: "position: relative; top: -3px; left: -6px;"
-                });
+        // Button controls for filtering items
+        filterTemplate: function () {
+            var grid = this._grid;
+            var $filterIcon = $("<i>").attr({
+                class: "bi bi-filter",
+                style: "position: relative; top: -3px; left: -6px;"
+            });
+            var $clearFilterIcon = $("<i>").attr({
+                class: "bi bi-x-lg",
+                style: "position: relative; top: -3px; left: -6px;"
+            });
 
-                var $customFilterButton = $("<button>")
-                    .attr({
-                        class: "btn btn-outline-info btn-xs",
-                        role: "button",
-                        title: "Save device to list"
-                    })
-                    .click(function (e) {
-                        grid.loadData();
-                        e.stopPropagation();
-                    })
-                    .append($filterIcon);
-                var $customCancelFilterButton = $("<button>")
-                    .attr({
-                        class: "btn btn-outline-secondary btn-xs",
-                        role: "button",
-                        title: "Cancel filter"
-                    })
-                    .click(function (e) {
-                        grid.clearFilter();
+            var $customFilterButton = $("<button>")
+                .attr({
+                    class: "btn btn-outline-info btn-xs",
+                    role: "button",
+                    title: "Save device to list"
+                })
+                .click(function (e) {
+                    grid.loadData();
+                    e.stopPropagation();
+                })
+                .append($filterIcon);
+            var $customCancelFilterButton = $("<button>")
+                .attr({
+                    class: "btn btn-outline-secondary btn-xs",
+                    role: "button",
+                    title: "Cancel filter"
+                })
+                .click(function (e) {
+                    grid.clearFilter();
 
-                        isFiltering = false;
-                        grid.option("filtering", isFiltering);
-                        e.stopPropagation();
-                    })
-                    .append($clearFilterIcon);
+                    isFiltering = false;
+                    grid.option("filtering", isFiltering);
+                    e.stopPropagation();
+                })
+                .append($clearFilterIcon);
 
-                return $("<div>").attr({ class: "btn-group" })
-                    .append($customFilterButton)
-                    .append($customCancelFilterButton);
-            }
-        });
-    }
+            return $("<div>").attr({ class: "btn-group" })
+                .append($customFilterButton)
+                .append($customCancelFilterButton);
+        }
+    });
 
     // Define jsGrid Configuration
     $("#GridDevices").jsGrid({
@@ -334,7 +346,7 @@ function renderData() {
 
         filtering: false,
         inserting: false,
-        editing: (!readOnly),
+        editing: true,
         selecting: true,
         sorting: false,
         paging: true,
