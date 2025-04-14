@@ -1,15 +1,19 @@
 package main
 
 import (
-	"flag"
+	"context"
 	"embed"
+	"errors"
+	"flag"
 	"io/fs"
 	"log"
 	"net"
 	"net/http"
 	"os"
+	"os/signal"
 	"path/filepath"
 	"strconv"
+	"syscall"
 	"time"
 
 	"github.com/NYTimes/gziphandler"
@@ -113,7 +117,26 @@ func setupWebServer() {
 		ReadTimeout:  15 * time.Second,
 	}
 
-	log.Fatal(srv.ListenAndServe())
+	go func() {
+		err := srv.ListenAndServe()
+		if !errors.Is(err, http.ErrServerClosed) {
+				log.Fatalf("HTTP server error: %v", err)
+		}
+		log.Println("Stopped serving new connections.")
+	}()
+
+	sigChan := make(chan os.Signal, 1)
+	signal.Notify(sigChan, syscall.SIGINT, syscall.SIGTERM)
+	<-sigChan
+
+	shutdownCtx, shutdownRelease := context.WithTimeout(context.Background(), 10*time.Second)
+	defer shutdownRelease()
+
+	err = srv.Shutdown(shutdownCtx)
+	if err != nil {
+			log.Fatalf("HTTP shutdown error: %v", err)
+	}
+	log.Println("Graceful shutdown complete.")
 
 }
 
