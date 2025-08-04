@@ -34,7 +34,7 @@ func saveData(w http.ResponseWriter, r *http.Request) {
 	var result HTTPResponseObject
 
 	log.Printf("New Application data received for saving to disk")
-	file, fileErr := os.OpenFile("devices.json", os.O_WRONLY|os.O_CREATE|os.O_TRUNC, os.ModePerm)
+	file, fileErr := os.OpenFile(args.DevicesPath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, os.ModePerm)
 	decoderErr := json.NewDecoder(r.Body).Decode(&appData)
 
 	baseErrStr := "Unable to save data to disk. "
