@@ -168,6 +168,9 @@ func processArgs() {
 		log.Fatal(err)
 	}
 
+	log.Printf("configuration file path: %s", configPath)
+	log.Printf("devices file path: %s", configPath)
+
 	args.ConfigPath = configPath
 	args.DevicesPath = devicesPath
 }
