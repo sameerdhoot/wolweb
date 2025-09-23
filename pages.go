@@ -29,7 +29,7 @@ func renderHomePage(w http.ResponseWriter, r *http.Request) {
 	}
 	tmpl, _ := template.New("index.html").Parse(indexHtml)
 	tmpl.Execute(w, pageData)
-	log.Println("Renedered the home page.")
+	log.Println("Rendered the home page.")
 
 }
 
@@ -45,3 +45,4 @@ func checkHealth(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, "alive")
 
 }
+
