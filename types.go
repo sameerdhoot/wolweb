@@ -26,5 +26,6 @@ type AppConfig struct {
 	Port     int    `json:"port" env:"WOLWEBPORT" env-default:"8089"`
 	VDir     string `json:"vdir" env:"WOLWEBVDIR" env-default:"/wolweb"`
 	BCastIP  string `json:"bcastip" env:"WOLWEBBCASTIP" env-default:"192.168.1.255:9"`
-	ReadOnly bool   `json:"read_only" env:"WOLWEBREADONLY" env-default:"false"`
+	ReadOnly    bool   `json:"read_only" env:"WOLWEBREADONLY" env-default:"false"`
+	HideAPIDocs bool   `json:"hide_api_docs" env:"WOLWEBHIDEAPIDOCS" env-default:"false"`
 }

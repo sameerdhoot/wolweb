@@ -51,6 +51,7 @@ The application will use the following default values if they are not explicitly
 | Virtual Directory | A virtual directory to mount this application under | **/wolweb**
 | Broadcast IP and Port | This is broadcast IP address and port for the local network. *Please include the port :9* | **192.168.1.255:9**
 | Read Only | If set to true, the UI will be read only | **false**
+| Hide API Docs | If set to true, the API documentation section is hidden on the web UI | **false**
 
 You can override the default application configuration by using a config file or by setting environment variables. The application will first load values from config file and look for environment variables and overwrites values from the file with the values which were found in the environment.
 
@@ -62,7 +63,8 @@ You can override the default application configuration by using a config file or
     "port": 8089,
     "vdir":"/wolweb",
     "bcastip":"192.168.1.255:9",
-    "read_only":false
+    "read_only":false,
+    "hide_api_docs":false
 }
 ```
 **Using Environment Variables:**
@@ -76,6 +78,7 @@ You can override the default application configuration by using a config file or
 | WOLWEBVDIR | Override for default virtual directory
 | WOLWEBBCASTIP | Override for broadcast IP address and port
 | WOLWEBREADONLY | Override for read only mode of UI
+| WOLWEBHIDEAPIDOCS | Override for hiding the API documentation section on the web UI
 
 ## Devices (targets) - devices.json format
 ```json

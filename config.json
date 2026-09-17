@@ -3,5 +3,6 @@
     "port": 8089,
     "vdir": "/wolweb",
     "bcastip": "192.168.1.255:9",
-    "read_only": false
+    "read_only": false,
+    "hide_api_docs": false
 }

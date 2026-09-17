@@ -48,6 +48,7 @@
             </div>
         </div>
         <div id="GridDevices"></div>
+        {{ if not .HideAPIDocs }}
         <hr>
         <div class="section-header">
             <h3>Wake-up directly using HTTP Requests</h3>
@@ -99,6 +100,7 @@
             </table>
         </div>
         <hr>
+        {{ end }}
         <p style="font-size: 13px;">
             <i class="bi bi-github" style="margin-right: 4px;"></i>
             Project Page:&nbsp;<a href="https://github.com/sameerdhoot/wolweb">https://github.com/sameerdhoot/wolweb</a>
@@ -116,11 +118,13 @@
         window.vDir = "{{$.VDir}}"
         window.bCastIP = "{{$.BCastIP}}"
 
+        {{ if not .HideAPIDocs }}
         $( "#code-element" ).load( "static/api-sample.txt" , function() {
             hljs.highlightAll();
         });
 
         document.getElementById("app-vdir").innerHTML = window.vDir + "/wake/"
+        {{ end }}
 
         Toast.setMaxCount(3);
         Toast.enableQueue(true);

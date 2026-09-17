@@ -22,3 +22,4 @@ services:
       WOLWEBPORT: "8089"
       #WOLWEBVDIR: "/wolweb"
       WOLWEBBCASTIP: "192.168.1.255:9"
+      #WOLWEBHIDEAPIDOCS: "false"
